@@ -11,25 +11,30 @@
     <ImageView
         android:id="@+id/splashLogo"
         android:layout_width="103dp"
-        android:layout_height="0dp"
+        android:layout_height="137dp"
         android:layout_marginTop="171dp"
         android:contentDescription="@string/k"
         app:layout_constraintBottom_toTopOf="@+id/splashText"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.962"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         app:srcCompat="@drawable/kyanbaslogoonly" />
 
     <ImageView
         android:id="@+id/splashText"
         android:layout_width="160dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="187dp"
+        android:layout_height="83dp"
+        android:layout_marginBottom="240dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splashLogo"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/kyanbastext" />
 </android.support.constraint.ConstraintLayout>

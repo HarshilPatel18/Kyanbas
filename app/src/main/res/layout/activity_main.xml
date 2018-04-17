@@ -1,10 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context="com.anomaly.android.kyanbas.View.Main.MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/detailsElementBackground"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/kyanbas_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:overScrollMode="never"
+
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorPrimaryDark"
+
+            app:tabTextAppearance="@android:style/TextAppearance.Material"
+            app:tabTextColor="@color/colorLightGray" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_activity"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/colorPrimary"
+        app:headerLayout="@layout/navigation_header"
+        app:itemIconTint="#000000"
+        app:menu="@menu/navigationmenu"></android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

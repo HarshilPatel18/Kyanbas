@@ -3,4 +3,11 @@
     <string name="k">Logo</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="tab_painting">Painting</string>
+    <string name="tab_photography">Photography</string>
+    <string name="tab_sculpture">Sculpture</string>
+    <string name="tab_home">Home</string>
+    <string name="main_activity">Main activity</string>
+
+
 </resources>
