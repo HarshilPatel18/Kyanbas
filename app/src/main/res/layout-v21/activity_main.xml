@@ -34,7 +34,7 @@
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/colorPrimaryDark"
 
-            app:tabTextAppearance="@style/TextAppearance.AppCompat"
+            app:tabTextAppearance="@android:style/TextAppearance.Material"
             app:tabTextColor="@color/colorLightGray" />
 
         <android.support.v4.view.ViewPager
@@ -59,6 +59,7 @@
         android:background="@color/colorPrimary"
         app:headerLayout="@layout/navigation_header"
         app:itemIconTint="#000000"
+        app:itemTextAppearance="@android:style/TextAppearance.Material.Menu"
         app:menu="@menu/navigationmenu"></android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -30,7 +30,7 @@ public class CategoryFragment extends Fragment {
         return fragmentView;
     }
 
-    public static CategoryFragment getInstance(String param1) {
+    public static CategoryFragment newInstance(String param1) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
         args.putString(ResponseKeys.CATEGORY_NICENAME, param1);
