@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
 
         NavigationView navigationView =findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+        //navigationView.setNavigationItemSelectedListener(MainActivity.this);
 
 
         mToolbar=findViewById(R.id.nav_actionbar);
@@ -188,9 +188,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
            RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
