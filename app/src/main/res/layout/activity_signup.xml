@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.anomaly.android.kyanbas.View.Signup.Signup"
+    tools:layout_editor_absoluteY="25dp">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/kyanbaslogoonly"
+        android:layout_marginLeft="60dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="170dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/kyanbastext"
+        android:layout_marginRight="8dp" />
+
+
+    <TextView
+        android:id="@+id/textView_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="Sign Up"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        tools:ignore="MissingConstraints"
+        android:layout_marginRight="8dp" />
+
+    <TextView
+        android:id="@+id/textView_signup_fname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="First Name"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_signup_fname"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <EditText
+        android:id="@+id/editText_signup_fname"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/textView_signup_lname"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:id="@+id/textView_signup_lname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="Last Name"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_signup_lname"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <EditText
+        android:id="@+id/editText_signup_lname"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/textView_signup_email"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:id="@+id/textView_signup_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="Email"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_Signup_Email"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <EditText
+        android:id="@+id/editText_Signup_Email"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:fontFamily="@font/hkgroteskregular"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/textView_signup_password"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:id="@+id/textView_signup_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="password"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_signup_password"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <EditText
+        android:id="@+id/editText_signup_password"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:fontFamily="@font/hkgroteskregular"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/textView_signup_confirmPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:id="@+id/textView_signup_confirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="confirm Password"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_signup_confirmPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <EditText
+        android:id="@+id/editText_signup_confirmPassword"
+        android:layout_width="304dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:fontFamily="@font/hkgroteskregular"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/button_signup_signup"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <Button
+        android:id="@+id/button_signup_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:background="@android:color/background_dark"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="Sign Up"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/textView_signup_login"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:id="@+id/textView_signup_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/hkgroteskregular"
+        android:text="Already a member? Log In"
+        android:textColor="@color/defaultBackgroundColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +31,7 @@ import com.anomaly.android.kyanbas.Network.Internet.MyApplication;
 import com.anomaly.android.kyanbas.Network.ResponseKeys;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.R;
+import com.anomaly.android.kyanbas.View.Login.Login;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import android.os.Bundle;
@@ -47,7 +50,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
+public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener, NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -62,6 +65,11 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         mDrawerLayout=findViewById(R.id.drawerLayout);
         mToggle= new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
         mToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorPrimaryDark));
+
+
+        NavigationView navigationView =findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+
 
         mToolbar=findViewById(R.id.nav_actionbar);
         setSupportActionBar(mToolbar);
@@ -221,5 +229,18 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id==R.id.nav_login)
+        {
+
+            startActivity(new Intent(MainActivity.this, Login.class));
+        }
+
+        return false;
+    }
 
 }
