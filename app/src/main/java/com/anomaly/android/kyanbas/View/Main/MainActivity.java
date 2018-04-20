@@ -1,5 +1,6 @@
 package com.anomaly.android.kyanbas.View.Main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
@@ -7,13 +8,13 @@ import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
@@ -32,14 +33,11 @@ import com.anomaly.android.kyanbas.Network.ResponseKeys;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Login.Login;
-import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -47,14 +45,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener, NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
+    NavigationView navigationView;
 
 
     @Override
@@ -62,14 +59,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Navigation Drawer
         mDrawerLayout=findViewById(R.id.drawerLayout);
         mToggle= new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
         mToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorPrimaryDark));
-
-
-        NavigationView navigationView =findViewById(R.id.navigation_view);
-        //navigationView.setNavigationItemSelectedListener(MainActivity.this);
-
 
         mToolbar=findViewById(R.id.nav_actionbar);
         setSupportActionBar(mToolbar);
@@ -79,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        navigationView=(NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
     }
 
@@ -98,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                    try {
 
                        ViewPagerAdapter adapter= new ViewPagerAdapter(getSupportFragmentManager());
-                       adapter.addFragment(CategoryFragment.newInstance("Home"),"Home");
+                       adapter.addFragment(HomeFragment.newInstance("Home"),"Home");
 
                        JSONObject jsonObject = new JSONObject(response);
                        JSONArray jsonArray = jsonObject.getJSONArray(ResponseKeys.JSON_DATA_WRAPPER);
@@ -114,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
                    } catch (JSONException e) {
                        e.printStackTrace();
-                       Toast.makeText(getApplicationContext(),"Error : "+e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(),"Response Error : "+e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                    }
                }
            }, new Response.ErrorListener() {
@@ -233,11 +227,22 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         if(id==R.id.nav_login)
         {
-
-            startActivity(new Intent(MainActivity.this, Login.class));
+            startActivity(new Intent(this, Login.class));
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(this.mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else
+        {
+            //this.finishAffinity();
+            super.onBackPressed();
+        }
     }
 
 }

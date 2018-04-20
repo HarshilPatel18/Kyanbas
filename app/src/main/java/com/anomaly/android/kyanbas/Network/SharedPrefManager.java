@@ -8,6 +8,8 @@ public class SharedPrefManager {
     private static SharedPrefManager mInstance;
     private static Context mCtx;
 
+    public static final String SHARED_PREF_NAME="com.anormaly.android.kyanbas.settings";
+    public static final String KEY_ACCESS_TOKEN="access_token";
 
 
     private SharedPrefManager(Context context) {
@@ -22,30 +24,28 @@ public class SharedPrefManager {
         return mInstance;
     }
 
-    /*public boolean userLogin(int id, String username, String email)
+    public boolean userLogin(String token)
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putInt(KEY_USER_ID,id);
-        editor.putString(KEY_USERNAME,username);
-        editor.putString(KEY_USER_Email,email);
+        editor.putString(KEY_ACCESS_TOKEN,token);
         editor.apply();
         return true;
 
-    }*/
+    }
 
-    /*public boolean isLoggedIn()
+    public boolean isLoggedIn()
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        if(sharedPreferences.getString(KEY_USERNAME,null) != null )
+        if(sharedPreferences.getString(KEY_ACCESS_TOKEN,null) != null )
         {
             return true;
         }
         return false;
-    }*/
+    }
 
-    /*public boolean logout()
+    public boolean logout()
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -53,18 +53,8 @@ public class SharedPrefManager {
         editor.clear();
         editor.apply();
         return true;
-    }*/
-
-    /*public String getUsername()
-    {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_USERNAME,null);
     }
 
-    public String getEmail()
-    {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_USER_Email,null);
-    }*/
+
 
 }

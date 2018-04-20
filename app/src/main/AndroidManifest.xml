@@ -30,6 +30,10 @@
         </receiver>
 
         <activity android:name=".View.Main.MainActivity"></activity>
+
+        <activity android:name=".View.Login.Login"></activity>
+
+        <activity android:name=".View.Signup.Signup"></activity>
     </application>
 
 </manifest>

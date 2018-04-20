@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorLightGray">#9b9a9a</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBGLightGrey">#f5f5f5</color>
+    <color name="colorKyanbasRed">#ed2024</color>
+    <color name="colorKyanbasYellow">#f9ed24</color>
+    <color name="colorKyanbasBlue">#485f9a</color>
+
 </resources>

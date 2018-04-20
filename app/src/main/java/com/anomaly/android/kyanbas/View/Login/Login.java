@@ -17,7 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
+import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
+import com.anomaly.android.kyanbas.View.Main.MainActivity;
 import com.anomaly.android.kyanbas.View.Signup.Signup;
 
 import org.json.JSONException;
@@ -55,18 +57,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
         textView_signup = findViewById(R.id.textView_signup_login);
         textView_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +70,7 @@ public class Login extends AppCompatActivity {
         final String email=editText_email.getText().toString().trim();
         final String password =editText_password.getText().toString().trim();
 
-        progressDialog.setMessage("Registering......");
+        progressDialog.setMessage("Logging in......");
         progressDialog.show();
 
         StringRequest stringRequest=new StringRequest(
@@ -96,11 +86,14 @@ public class Login extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
-
-
-                            if(!jsonObject.getBoolean("error"))
+                                if(!jsonObject.getBoolean("success"))
                                 {
-
+                                    Toast.makeText(Login.this,jsonObject.getString("error"),Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    JSONObject dataJsonObject=jsonObject.getJSONObject("data");
+                                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN));
+                                    Toast.makeText(Login.this,"Log in Successful !",Toast.LENGTH_LONG).show();
                                 }
 
 
@@ -115,7 +108,7 @@ public class Login extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         progressDialog.dismiss();
-                        Toast.makeText(Login.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login.this,"Error of Volley",Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -127,9 +120,15 @@ public class Login extends AppCompatActivity {
                 param.put("password",password);
                 return param;
             }
+
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

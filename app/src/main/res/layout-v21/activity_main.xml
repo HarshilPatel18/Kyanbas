@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
     tools:context="com.anomaly.android.kyanbas.View.Main.MainActivity">
 
     <LinearLayout
@@ -13,7 +14,8 @@
         android:layout_height="match_parent"
         android:background="?android:attr/detailsElementBackground"
         android:orientation="vertical"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        >
 
         <include
             layout="@layout/kyanbas_toolbar"
@@ -27,6 +29,7 @@
             android:background="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:overScrollMode="never"
+
 
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:tabGravity="fill"
@@ -52,6 +55,7 @@
 
 
     <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
