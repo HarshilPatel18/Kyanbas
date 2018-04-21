@@ -42,7 +42,7 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
         //holder.categoryTextView.setText("Category : "+art.getDeliveryType());
 
         holder.nameTextView.setText(art.getName());
-        holder.artUserTextView.setText(art.getUser().getFirstName()+" "+art.getUser().getLastName());
+        holder.artUserTextView.setText("By "+art.getUser().getFirstName()+" "+art.getUser().getLastName());
         holder.priceTextView.setText("\u20B9 "+art.getPrice().toString());
 
         Picasso.with(mContext)
@@ -74,8 +74,8 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
             super(itemView);
 
             imageView = (ImageView) itemView.findViewById(R.id.artImageCardView);
-            nameTextView = (TextView) itemView.findViewById(R.id.artNameCardview);
-            artUserTextView= (TextView) itemView.findViewById(R.id.artUserTextView);
+            nameTextView = (TextView) itemView.findViewById(R.id.ArtNameCardview);
+            artUserTextView= (TextView) itemView.findViewById(R.id.AuthorCardview);
             priceTextView= (TextView) itemView.findViewById(R.id.artPriceCardview);
         }
 

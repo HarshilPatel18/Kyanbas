@@ -108,7 +108,7 @@ public class Login extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         progressDialog.dismiss();
-                        Toast.makeText(Login.this,"Error of Volley",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login.this,"Invalid Credentials !",Toast.LENGTH_LONG).show();
 
                     }
                 }

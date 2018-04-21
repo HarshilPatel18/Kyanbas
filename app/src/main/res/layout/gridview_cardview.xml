@@ -2,12 +2,11 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="230dp"
-    android:layout_margin="2dp"
+    android:layout_width="200dp"
+    android:layout_height="290dp"
+    android:layout_margin="5dp"
     android:orientation="horizontal"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="0dp"
+    app:cardCornerRadius="3dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -15,18 +14,18 @@
         android:layout_height="match_parent"
         android:background="?android:selectableItemBackground"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <ImageView
-            android:id="@+id/artImageCardView"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:id="@+id/GridViewImage"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:layout_gravity="center_horizontal"
 
 
             android:layout_marginBottom="8dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/defaultart_image_2"
+            android:src="@drawable/defaultart_image_3"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
             app:layout_constraintHorizontal_bias="0.0"
@@ -36,7 +35,7 @@
 
 
         <TextView
-            android:id="@+id/ArtNameCardview"
+            android:id="@+id/GridViewArtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -54,7 +53,7 @@
             tools:layout_editor_absoluteY="6dp" />
 
         <TextView
-            android:id="@+id/AuthorCardview"
+            android:id="@+id/GridViewAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -71,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ArtNameCardview" />
 
         <TextView
-            android:id="@+id/artPriceCardview"
+            android:id="@+id/GridviewPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 

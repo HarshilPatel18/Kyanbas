@@ -196,8 +196,8 @@ public class Signup extends AppCompatActivity {
 
     }
 
-
-
-
-
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
