@@ -1,8 +1,10 @@
 package com.anomaly.android.kyanbas.View.Signup;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -130,7 +132,35 @@ public class Signup extends AppCompatActivity {
                     public void onResponse(String response) {
                         progressDialog.dismiss();
                         Toast.makeText(Signup.this,response,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Signup.this, Login.class));
+
+
+//================Alert here
+
+                        AlertDialog.Builder signupAlertBuilder = new AlertDialog.Builder(Signup.this)
+                                .setMessage("Thanks for signing up! \nPlease check your email to complete your registration.\nGoto?")
+                                .setCancelable(false)
+                                .setPositiveButton("Mail", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                                        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                                        startActivity(intent);
+
+                                    }
+                                })
+                                .setNegativeButton("Log In", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        startActivity(new Intent(Signup.this, Login.class));
+
+                                    }
+                                });
+
+                        AlertDialog SignupalertDialog = signupAlertBuilder.create();
+                        SignupalertDialog.show();
+
 
                     }
                 },

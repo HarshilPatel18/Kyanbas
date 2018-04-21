@@ -31,6 +31,7 @@ import com.anomaly.android.kyanbas.Network.Internet.ConnectivityReceiver;
 import com.anomaly.android.kyanbas.Network.Internet.MyApplication;
 import com.anomaly.android.kyanbas.Network.ResponseKeys;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
+import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Login.Login;
 
@@ -228,6 +229,16 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         if(id==R.id.nav_login)
         {
             startActivity(new Intent(this, Login.class));
+        }
+
+        else if(id==R.id.nav_logout)
+        {
+
+            SharedPrefManager.getInstance(this).logout();
+
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
+
+            Toast.makeText(this,"You Are Succesfully Logged Out",Toast.LENGTH_SHORT).show();
         }
 
         return false;
