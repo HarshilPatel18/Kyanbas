@@ -34,6 +34,8 @@ import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Login.Login;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -255,5 +257,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             super.onBackPressed();
         }
     }
+
+
 
 }
