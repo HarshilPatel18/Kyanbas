@@ -104,7 +104,8 @@ public class Signup extends AppCompatActivity {
         textView_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Signup.this, Login.class));
+                finish();
+                //startActivity(new Intent(Signup.this, Login.class));
             }
         });
 
@@ -168,7 +169,8 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(Signup.this,error.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Signup.this,"Please Enter Proper data !",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Signup.this,error.toString(),Toast.LENGTH_SHORT).show();
 
                     }
                 }){

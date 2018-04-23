@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.Modal.Art;
 import com.squareup.picasso.Picasso;
@@ -46,7 +48,7 @@ public class RecyclerGridViewAdapter extends RecyclerView.Adapter<RecyclerGridVi
         holder.priceTextView.setText("\u20B9 "+art.getPrice().toString());
 
         Picasso.with(mContext)
-                .load("staging.rentedcanvas.com/storage/"+art.getThumbnailPicture())
+                .load(Constants.URL_THUMBNAIL_IMAGE+art.getThumbnailPicture())
                 .fit()
                 .placeholder(R.drawable.defaultart_image_3)
                 .into(holder.imageView);

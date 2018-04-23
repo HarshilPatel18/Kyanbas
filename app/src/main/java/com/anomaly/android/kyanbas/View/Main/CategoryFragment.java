@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +52,8 @@ public class CategoryFragment extends Fragment {
     String category;
     List<Art> listArt;
     RecyclerView recyclerGrid;
+    Context mContext;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -60,9 +63,9 @@ public class CategoryFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_category, container, false);
         if(getArguments()!=null)
         {
-            category=getArguments().getString(ResponseKeys.CATEGORY_NICENAME);
+            category= String.valueOf(getArguments().getInt(ResponseKeys.CATEGORY_PARENT_ID));
         }
-
+        mContext=container.getContext();
         return fragmentView;
     }
 
@@ -70,22 +73,31 @@ public class CategoryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerGrid = (RecyclerView) view.findViewById(R.id.gridRecycler);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.Cate_swipe_refresh_layout);
 
         listArt = new ArrayList<>();
         displayArtbyCategory();
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                displayArtbyCategory();
+            }
+        });
+
     }
 
-    public static CategoryFragment newInstance(String param1) {
+    public static CategoryFragment newInstance(Integer param1) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
-        args.putString(ResponseKeys.CATEGORY_NICENAME, param1);
+        args.putInt(ResponseKeys.CATEGORY_PARENT_ID, param1);
         fragment.setArguments(args);
         return fragment;
     }
 
     public void displayArtbyCategory()
     {
+        swipeRefreshLayout.setRefreshing(true);
         StringRequest stringRequest= new StringRequest(Request.Method.GET, Constants.URL_ARTBY_CATEGORY+category, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -93,30 +105,31 @@ public class CategoryFragment extends Fragment {
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray(ResponseKeys.JSON_DATA_WRAPPER);
 
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject jo = jsonArray.getJSONObject(i);
-
-
-                        JSONObject userJson=jo.getJSONObject("user");
-
-                        User user=new User(userJson.getInt("id"),userJson.getString("first_name"),userJson.getString("last_name"),userJson.getString("profile_picture"),userJson.getString("thumbnail_picture"),userJson.getString("nicename"));
-                        Art art=new Art(jo.getInt("id"),jo.getString("name"),jo.getString("thumbnail_picture"),jo.getString("description"),jo.getInt("price"),user);
-                        //Toast.makeText(getContext(),user.getFirstName(),Toast.LENGTH_SHORT);
-                        listArt.add(art);
-
-
-                    }
-
-                    if(listArt==null || listArt.size()==0)
+                    if (jsonObject.getBoolean("success"))
                     {
-                        recyclerGrid.setAdapter(new EmptyRecyclerViewAdapter("No Art Found !"));
-                    }
-                    else
-                    {
+
+                        JSONObject jsonData = jsonObject.getJSONObject("data");
+                        JSONArray jsonArray=jsonData.getJSONArray("object");
+                        JSONArray jsonArrayObject= (JSONArray) jsonArray.get(0);
+
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jo = jsonArray.getJSONObject(i);
+
+
+                            JSONObject userJson=jo.getJSONObject("user");
+
+                            User user=new User(userJson.getInt("id"),userJson.getString("first_name"),userJson.getString("last_name"),userJson.getString("profile_picture"),userJson.getString("thumbnail_picture"),userJson.getString("nicename"));
+                            Art art=new Art(jo.getInt("id"),jo.getString("name"),jo.getString("thumbnail_picture"),jo.getString("description"),jo.getInt("price"),user);
+                            //Toast.makeText(getContext(),user.getFirstName(),Toast.LENGTH_SHORT);
+                            listArt.add(art);
+
+
+                        }
+                        swipeRefreshLayout.setRefreshing(false);
+
                         RecyclerGridViewAdapter myAdapter = new RecyclerGridViewAdapter(getContext(),listArt);
                         recyclerGrid.setLayoutManager(new GridLayoutManager(getContext(),2));
                         recyclerGrid.setAdapter(myAdapter);
@@ -125,7 +138,12 @@ public class CategoryFragment extends Fragment {
 
 
 
+
+
+
+
                 } catch (JSONException e) {
+                    swipeRefreshLayout.setRefreshing(false);
                     e.printStackTrace();
                     Toast.makeText(getContext(),"Response Error : "+e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -133,14 +151,12 @@ public class CategoryFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(getContext(),"Network issue : "+error.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }){
 
-            @Override
-            public Priority getPriority() {
-                return Priority.IMMEDIATE;
-            }
+
 
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {

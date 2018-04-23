@@ -15,6 +15,8 @@ public class Constants {
     public static final String URL_REGISTER=API_ROOT_URL+"auth/register";
     //art
     public static final String URL_ART_LIST=API_ROOT_URL+"art/list";
-    public static final String URL_ARTBY_CATEGORY=API_ROOT_URL+"art/category/";
+    public static final String URL_ARTBY_CATEGORY=API_ROOT_URL+"art/category/list/";
+    public static final String URL_PRODUCT_BY_CATEGORY=API_ROOT_URL+"product/category/list/";
+    public static final String URL_THUMBNAIL_IMAGE="http://staging.rentedcanvas.com/";
 
 }

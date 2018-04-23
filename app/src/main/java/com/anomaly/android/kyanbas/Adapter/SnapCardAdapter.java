@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anomaly.android.kyanbas.Modal.Art;
+import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
 import com.squareup.picasso.Picasso;
 
@@ -39,14 +41,12 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
         Art art = mArts.get(position);
 
 
-        //holder.categoryTextView.setText("Category : "+art.getDeliveryType());
-
         holder.nameTextView.setText(art.getName());
         holder.artUserTextView.setText("By "+art.getUser().getFirstName()+" "+art.getUser().getLastName());
         holder.priceTextView.setText("\u20B9 "+art.getPrice().toString());
 
         Picasso.with(mContext)
-                .load("staging.rentedcanvas.com/storage/"+art.getThumbnailPicture())
+                .load(Constants.URL_THUMBNAIL_IMAGE+art.getThumbnailPicture())
                 .fit()
                 .placeholder(R.drawable.defaultart_image_2)
                 .into(holder.imageView);
@@ -77,6 +77,8 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
             nameTextView = (TextView) itemView.findViewById(R.id.ArtNameCardview);
             artUserTextView= (TextView) itemView.findViewById(R.id.AuthorCardview);
             priceTextView= (TextView) itemView.findViewById(R.id.artPriceCardview);
+
+
         }
 
 
