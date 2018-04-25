@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
@@ -34,13 +35,17 @@ import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Login.Login;
+import com.anomaly.android.kyanbas.View.Profile.Profile;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -48,6 +53,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,6 +84,17 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         navigationView=(NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -259,5 +277,83 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     }
 
 
+    //header==================================================================================================================================
 
+    private void getUserInfo(){
+
+        StringRequest stringRequest=new StringRequest(
+                Request.Method.GET,
+                Constants.URL_USER_INFO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if(!jsonObject.getBoolean("success"))
+                            {
+                                Toast.makeText(MainActivity.this,jsonObject.getString("error"),Toast.LENGTH_LONG).show();
+                            }
+                            else {
+
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(MainActivity.this,"exception error",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+
+
+                        error.printStackTrace();
+
+                    }
+                }
+        ){
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            /** Passing some request headers* */
+            @Override
+            public Map<String,String> getHeaders() throws AuthFailureError {
+                HashMap<String,String> headers  = new HashMap<>();
+                headers.put("Authorization","bearer "+SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim());
+                return headers;
+            }
+
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //changing navigation drawer value here==================================
+
+
+        if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+
+            Toast.makeText(this,"changed header value\n"+SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim(),Toast.LENGTH_LONG).show();
+
+
+            getUserInfo();
+
+        }
+        else{
+            Toast.makeText(MainActivity.this, "Not Logged In !", Toast.LENGTH_LONG).show();
+        }
+
+    }
 }

@@ -12,7 +12,7 @@ public class SharedPrefManager {
     public static final String KEY_ACCESS_TOKEN="access_token";
 
 
-    private SharedPrefManager(Context context) {
+    public SharedPrefManager(Context context) {
         mCtx = context;
 
     }
@@ -30,12 +30,13 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(KEY_ACCESS_TOKEN,token);
+        
         editor.apply();
         return true;
 
     }
 
-    public boolean isLoggedIn()
+    public static boolean isLoggedIn()
     {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         if(sharedPreferences.getString(KEY_ACCESS_TOKEN,null) != null )
@@ -55,6 +56,9 @@ public class SharedPrefManager {
         return true;
     }
 
-
+    public static String GetAccessToken(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_ACCESS_TOKEN,null);
+    }
 
 }

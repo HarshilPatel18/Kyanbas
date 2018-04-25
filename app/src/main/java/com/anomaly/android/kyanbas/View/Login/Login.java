@@ -242,7 +242,10 @@ public class Login extends AppCompatActivity {
                                 else {
                                     JSONObject dataJsonObject=jsonObject.getJSONObject("data");
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN));
-                                    Toast.makeText(Login.this,"Log in Successful !",Toast.LENGTH_LONG).show();
+                                    //===========================
+                                    String key=SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken();
+                                    Toast.makeText(Login.this,"Volly Login Successful !"+key,Toast.LENGTH_LONG).show();
+                                    finish();
                                 }
 
 
@@ -298,7 +301,6 @@ public class Login extends AppCompatActivity {
                                 else {
                                     JSONObject dataJsonObject=jsonObject.getJSONObject("data");
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN));
-                                    Toast.makeText(Login.this,"Volly Login Successful !",Toast.LENGTH_LONG).show();
                                     finish();
                                 }
 
@@ -361,18 +363,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // [START on_start_sign_in]
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        Toast.makeText(Login.this,"Already Logged In !",Toast.LENGTH_LONG).show();
-        updateUI(account);
-        // [END on_start_sign_in]
-    }
 
     private void updateUI(@Nullable GoogleSignInAccount account) {
         if (account != null) {
@@ -404,7 +395,7 @@ public class Login extends AppCompatActivity {
 
             Sociallogin(googlejsonObject,"google");
 
-            findViewById(R.id.button_login_google).setVisibility(View.GONE);
+            //findViewById(R.id.button_login_google).setVisibility(View.GONE);
 
         } else {
 
@@ -412,6 +403,21 @@ public class Login extends AppCompatActivity {
             findViewById(R.id.button_login_google).setVisibility(View.VISIBLE);
 
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplication());
+        if(sharedPrefManager.isLoggedIn()) {
+
+            Toast.makeText(Login.this, "Already Logged In !", Toast.LENGTH_LONG).show();
+
+        }
+        else{
+            Toast.makeText(Login.this, "Not Logged In !", Toast.LENGTH_LONG).show();
+        }
+
     }
 
 }
