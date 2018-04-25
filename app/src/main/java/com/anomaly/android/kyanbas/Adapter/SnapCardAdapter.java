@@ -45,10 +45,11 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
         holder.artUserTextView.setText("By "+art.getUser().getFirstName()+" "+art.getUser().getLastName());
         holder.priceTextView.setText("\u20B9 "+art.getPrice().toString());
 
-        Picasso.with(mContext)
+
+        Picasso.get()
                 .load(Constants.URL_THUMBNAIL_IMAGE+art.getThumbnailPicture())
                 .fit()
-                .placeholder(R.drawable.defaultart_image_2)
+                .placeholder(R.drawable.ic_art_image_placeholder)
                 .into(holder.imageView);
 
     }

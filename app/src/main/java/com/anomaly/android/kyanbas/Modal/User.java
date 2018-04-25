@@ -42,6 +42,10 @@ public class User {
         this.nicename = nicename;
     }
 
+    public User(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

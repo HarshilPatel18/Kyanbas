@@ -29,6 +29,16 @@
 # Downloader used only when OkHttp 3.x is present on the classpath.
 -dontwarn com.squareup.picasso.OkHttp3Downloader
 
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
+-dontwarn com.mapbox.mapboxsdk.plugins.locationlayer.**
+-dontwarn okhttp3.internal.platform.ConscryptPlatform.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+
+
 
 ### OKHTTP
 

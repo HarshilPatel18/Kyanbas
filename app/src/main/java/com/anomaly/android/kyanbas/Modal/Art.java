@@ -13,6 +13,7 @@ public class Art {
     private String thumbnailPicture;
     private String nicename;
     private User user;
+
     private Integer price;
     private Integer hasSpecification;
     private String specifications;
@@ -46,6 +47,7 @@ public class Art {
         this.user=user;
 
     }
+
 
 
     public Integer getId() {

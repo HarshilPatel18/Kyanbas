@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
                            JSONObject jo = jsonArray.getJSONObject(i);
                            Category category=new Category(jo.getInt(ResponseKeys.CATEGORY_ID),jo.getString(ResponseKeys.CATEGORY_NAME),jo.getInt(ResponseKeys.CATEGORY_PARENT_ID),jo.getString(ResponseKeys.CATEGORY_DESC),jo.getString(ResponseKeys.CATEGORY_NICENAME));
-                           adapter.addFragment(CategoryFragment.newInstance(category.getParentId()),category.getName());
+                           adapter.addFragment(CategoryFragment.newInstance(category.getId()),category.getName());
                        }
                        viewPager.setAdapter(adapter);
                        tabLayout.setupWithViewPager(viewPager);
