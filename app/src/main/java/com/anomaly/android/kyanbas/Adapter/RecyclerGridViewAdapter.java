@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.Modal.Art;
@@ -23,7 +24,6 @@ public class RecyclerGridViewAdapter extends RecyclerView.Adapter<RecyclerGridVi
 
     private Context mContext ;
     private List<Art> mArtList ;
-
 
     public RecyclerGridViewAdapter(Context mContext, List<Art> mArtList) {
         this.mContext = mContext;
@@ -55,12 +55,15 @@ public class RecyclerGridViewAdapter extends RecyclerView.Adapter<RecyclerGridVi
 
 
 
+
     }
 
     @Override
     public int getItemCount() {
         return mArtList.size();
     }
+
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 

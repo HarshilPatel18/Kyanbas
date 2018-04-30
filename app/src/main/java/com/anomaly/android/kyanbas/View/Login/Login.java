@@ -23,6 +23,7 @@ import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Main.MainActivity;
 import com.anomaly.android.kyanbas.View.Signup.Signup;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -121,7 +122,7 @@ public class Login extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
-                    public void onSuccess(LoginResult loginResult) {
+                    public void onSuccess(final LoginResult loginResult) {
                         // App code
                         Toast.makeText(Login.this, loginResult.toString(), Toast.LENGTH_LONG).show();
 
@@ -132,13 +133,17 @@ public class Login extends AppCompatActivity {
                                     @Override
                                     public void onCompleted(JSONObject fbobject, GraphResponse response) {
 
-                                        Log.v("LoginActivity", fbobject.toString());
-                                        Toast.makeText(Login.this, "LoginActivity" + fbobject.toString(), Toast.LENGTH_LONG).show();
+                                        Log.v("LoginActivity", response.toString());
+
+                                        Toast.makeText(Login.this, "fbobject\n" + fbobject.toString()+"\n\n response\n"+response.toString()+"\n\nlogin result\n"+loginResult.getAccessToken().getToken(), Toast.LENGTH_LONG).show();
 
                                         response.getJSONObject();
+
+
+
                                         // Application code
 
-                                        Sociallogin(fbobject, "facebook");
+                                        Sociallogin(loginResult.getAccessToken().getToken(), "facebook");
 
 
                                     }
@@ -281,7 +286,7 @@ public class Login extends AppCompatActivity {
 
 
 
-    private void Sociallogin(final JSONObject object, final String platform)
+    private void Sociallogin(final String Accesstoken, final String platform)
         {
             StringRequest stringRequest=new StringRequest(
                     Request.Method.POST,
@@ -324,8 +329,8 @@ public class Login extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> param = new HashMap<>();
                     param.put("provider",platform);
-                    param.put("user",object.toString());
-                    param.put("client","android");
+                    param.put("token",Accesstoken);
+
 
                     return param;
                 }
@@ -371,37 +376,12 @@ public class Login extends AppCompatActivity {
             Toast.makeText(this,account.getClass().toString(),Toast.LENGTH_LONG).show();
 
 
-            JSONObject googlejsonObject = new JSONObject();
-            try {
-                googlejsonObject.put("name",account.getDisplayName());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                googlejsonObject.put("email",account.getEmail());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                googlejsonObject.put("id",account.getId());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                googlejsonObject.put("avatar_orignal",account.getPhotoUrl());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            Sociallogin(googlejsonObject,"google");
+            //Sociallogin(account.getClass().getIdToken().toString(),"google");
 
             //findViewById(R.id.button_login_google).setVisibility(View.GONE);
 
         } else {
-
-
             findViewById(R.id.button_login_google).setVisibility(View.VISIBLE);
-
         }
     }
 

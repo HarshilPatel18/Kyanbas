@@ -36,8 +36,10 @@ import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Login.Login;
 import com.anomaly.android.kyanbas.View.Profile.Profile;
+import com.anomaly.android.kyanbas.View.ViewArt.ViewArt;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.squareup.picasso.Picasso;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -45,6 +47,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
     NavigationView navigationView;
+
+    View headerView;
+    TextView navHeaderUsername;
+    ImageView navHeaderUserdp;
 
 
     @Override
@@ -84,6 +91,28 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         navigationView=(NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        headerView=navigationView.getHeaderView(0);
+        navHeaderUsername=(TextView)headerView.findViewById(R.id.textviewUsernameNavDrawer);
+        navHeaderUserdp = headerView.findViewById(R.id.imageviewProfileNavDrawer);
+
+        //onclick here===================================================
+
+        navHeaderUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+                    startActivity(new Intent(MainActivity.this,Profile.class));
+
+                }
+                else{
+                    startActivity(new Intent(MainActivity.this,Login.class));
+                }
+
+            }
+        });
 
 
 
@@ -246,12 +275,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id==R.id.nav_login)
-        {
-            startActivity(new Intent(this, Login.class));
-        }
 
-        else if(id==R.id.nav_logout)
+
+        if(id==R.id.nav_logout)
         {
 
             SharedPrefManager.getInstance(this).logout();
@@ -259,6 +285,13 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
 
             Toast.makeText(this,"You Are Succesfully Logged Out",Toast.LENGTH_SHORT).show();
+            onStart();
+        }
+
+        else if(id==R.id.nav_cart){
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
+
+            startActivity(new Intent(MainActivity.this, ViewArt.class));
         }
 
         return false;
@@ -298,6 +331,26 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                             }
                             else {
 
+                                //code here================================================================
+
+                                JSONObject dataJsonObject=jsonObject.getJSONObject("data");
+                                Toast.makeText(MainActivity.this,dataJsonObject.toString(),Toast.LENGTH_LONG).show();
+
+
+                                String name = dataJsonObject.get("first_name")+" "+dataJsonObject.get("last_name");
+
+
+
+                                navHeaderUsername.setText(name);
+
+                                Picasso.get()
+                                        .load(Constants.URL_THUMBNAIL_IMAGE+dataJsonObject.get("profile_picture"))
+                                        .fit()
+                                        .centerCrop()
+                                        .placeholder(R.drawable.ic_art_image_placeholder)
+                                        .into(navHeaderUserdp);
+
+
                             }
                         } catch (JSONException e) {
                             Toast.makeText(MainActivity.this,"exception error",Toast.LENGTH_LONG).show();
@@ -308,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
 
 
                         error.printStackTrace();
@@ -326,8 +379,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             /** Passing some request headers* */
             @Override
             public Map<String,String> getHeaders() throws AuthFailureError {
-                HashMap<String,String> headers  = new HashMap<>();
-                headers.put("Authorization","bearer "+SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim());
+                String bearer = "Bearer ".concat(SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim());
+                Map headers = new HashMap();
+                headers.put("Authorization",bearer);
                 return headers;
             }
 
@@ -344,9 +398,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
 
         if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-
-            Toast.makeText(this,"changed header value\n"+SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim(),Toast.LENGTH_LONG).show();
-
 
             getUserInfo();
 

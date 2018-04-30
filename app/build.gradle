@@ -58,5 +58,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:4.32.0'
     compile 'com.google.android.gms:play-services-auth:15.0.0'
 
+    compile 'com.commit451:PhotoView:1.2.4'
+
 
 }

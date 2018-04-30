@@ -1,4 +1,4 @@
-package com.anomaly.android.kyanbas.View.Profile;
+package com.anomaly.android.kyanbas.View.ViewArt;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Header;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,10 +15,7 @@ import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
-import com.anomaly.android.kyanbas.View.Login.Login;
-import com.anomaly.android.kyanbas.View.Main.MainActivity;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,42 +23,44 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Profile extends AppCompatActivity {
+import uk.co.senab.photoview.PhotoViewAttacher;
 
-    ImageView imageViewUserDp;
-    TextView textViewusername,textViewuseremail;
+public class ViewArt extends AppCompatActivity {
+
+    ImageView ImageviewArtImage;
+    TextView artname,artprice,artdesc,artby,artcategory,artweight,artmeasurements,artAvailable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_view_art);
 
-        imageViewUserDp = findViewById(R.id.imageview_Profiledp);
-        textViewusername = findViewById(R.id.textview_ProfileName);
-        textViewuseremail = findViewById(R.id.textview_ProfileEmail);
+        ImageviewArtImage=findViewById(R.id.imageview_art_image);
+        artname=findViewById(R.id.textView_Art_Name);
+        artprice=findViewById(R.id.textView_Art_price);
+        artdesc=findViewById(R.id.textView_Art_desc);
+        artby=findViewById(R.id.textView_Art_by);
+        artcategory=findViewById(R.id.textView_CategoryName);
+        artweight=findViewById(R.id.textView_weight);
+        artmeasurements=findViewById(R.id.textView_measurements);
+        artAvailable=findViewById(R.id.textView_available);
 
-        getUserInfo();
+
+         PhotoViewAttacher photoAttacher;
+         photoAttacher= new PhotoViewAttacher(ImageviewArtImage);
+         photoAttacher.update();
+
+        setArt();
     }
 
-
-
-
-
-
-
-
-
-
-
-//Methods Here========================================================================================
-
-    private void getUserInfo(){
-
-
-
+    void setArt(){
+        String url= Constants.URL_ARTBY_NICENAME.concat("319Neoma");
         StringRequest stringRequest=new StringRequest(
+
+
                 Request.Method.GET,
-                Constants.URL_USER_INFO,
+                url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -80,20 +78,26 @@ public class Profile extends AppCompatActivity {
                                 //code here================================================================
 
                                 JSONObject dataJsonObject=jsonObject.getJSONObject("data");
+                                JSONObject userJsonObject=dataJsonObject.getJSONObject("user");
+                                JSONObject categoryJsonObject=dataJsonObject.getJSONObject("category");
                                 Toast.makeText(getApplicationContext(),dataJsonObject.toString(),Toast.LENGTH_LONG).show();
 
 
-                                String name = dataJsonObject.get("first_name")+" "+dataJsonObject.get("last_name");
-                                textViewusername.setText(name);
-                                textViewuseremail.setText(dataJsonObject.get("email").toString());
-
 
                                 Picasso.get()
-                                        .load(Constants.URL_THUMBNAIL_IMAGE+dataJsonObject.get("profile_picture"))
+                                        .load(Constants.URL_THUMBNAIL_IMAGE+dataJsonObject.get("product"))
                                         .fit()
-                                        .centerCrop()
                                         .placeholder(R.drawable.ic_art_image_placeholder)
-                                        .into(imageViewUserDp);
+                                        .into(ImageviewArtImage);
+
+                                artname.setText(dataJsonObject.get("name").toString());
+                                artdesc.setText(dataJsonObject.get("description").toString());
+                                artprice.setText("\u20B9 "+dataJsonObject.get("price").toString());
+                                artAvailable.setText(dataJsonObject.get("available").toString());
+                                artby.setText("By "+userJsonObject.get("first_name")+" "+userJsonObject.get("last_name"));
+                                artcategory.setText("Category : "+categoryJsonObject.get("name").toString());
+                                artmeasurements.setText("Measurements : "+dataJsonObject.get("measurements").toString());
+                                artweight.setText("Weight : "+dataJsonObject.get("weight").toString());
 
 
 
@@ -120,30 +124,10 @@ public class Profile extends AppCompatActivity {
                 }
         ){
 
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                return params;
-            }
-
-            /** Passing some request headers* */
-            @Override
-            public Map<String,String> getHeaders() throws AuthFailureError {
-                String bearer = "Bearer ".concat(SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim());
-                Map headers = new HashMap();
-                headers.put("Authorization",bearer);
-                return headers;
-            }
-
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
     }
-
-
-
-
-
 
 }
