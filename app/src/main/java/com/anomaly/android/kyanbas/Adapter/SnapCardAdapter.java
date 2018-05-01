@@ -1,6 +1,9 @@
 package com.anomaly.android.kyanbas.Adapter;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 import com.anomaly.android.kyanbas.Modal.Art;
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
+import com.anomaly.android.kyanbas.View.ImagePreview.ImagePreviewer;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,8 +41,8 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Art art = mArts.get(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final Art art = mArts.get(position);
 
 
         holder.nameTextView.setText(art.getName());
@@ -51,6 +55,15 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
                 .fit()
                 .placeholder(R.drawable.ic_art_image_placeholder)
                 .into(holder.imageView);
+
+        holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public boolean onLongClick(View view) {
+                new ImagePreviewer().show(view.getContext(),holder.imageView,art.getName(),art.getUser().getFirstName()+" "+art.getUser().getLastName(),art.getPrice().toString());
+                return false;
+            }
+        });
 
     }
 
@@ -70,10 +83,12 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
         public TextView nameTextView;
         public TextView artUserTextView;
         public TextView priceTextView;
+        public CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            cardView=itemView.findViewById(R.id.snapCardview);
             imageView = (ImageView) itemView.findViewById(R.id.artImageCardView);
             nameTextView = (TextView) itemView.findViewById(R.id.ArtNameCardview);
             artUserTextView= (TextView) itemView.findViewById(R.id.AuthorCardview);

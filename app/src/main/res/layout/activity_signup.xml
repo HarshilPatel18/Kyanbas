@@ -4,50 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.anomaly.android.kyanbas.View.Signup.Signup"
     tools:layout_editor_absoluteY="25dp">
 
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
         app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/kyanbaslogoonly" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="170dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginTop="24dp"
         android:layout_weight="1"
         android:paddingLeft="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/kyanbastext" />
+        app:srcCompat="@drawable/kyanbastext"
+        tools:ignore="RtlCompat" />
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/colorBGLightGrey"
+        android:layout_marginTop="24dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        tools:background="@color/colorPrimary">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
@@ -63,11 +66,11 @@
                 android:id="@+id/textView_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_margin="8dp"
                 android:fontFamily="@font/hkgroteskregular"
                 android:text="Sign Up"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView_signup_fname"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
@@ -77,7 +80,7 @@
                 android:id="@+id/textView_signup_fname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_margin="8dp"
                 android:fontFamily="@font/hkgroteskregular"
                 android:text="First Name"
                 android:textColor="@color/colorPrimaryDark"
@@ -89,8 +92,9 @@
                 android:id="@+id/editText_signup_fname"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
 
+                android:layout_margin="8dp"
+                android:layout_marginBottom="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/textView_signup_lname"
@@ -100,8 +104,8 @@
                 android:id="@+id/textView_signup_lname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
 
+                android:layout_margin="8dp"
 
                 android:fontFamily="@font/hkgroteskregular"
                 android:text="Last Name"
@@ -114,9 +118,10 @@
                 android:id="@+id/editText_signup_lname"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
 
+                android:layout_margin="8dp"
 
+                android:layout_marginBottom="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/textView_signup_email"
@@ -126,8 +131,8 @@
                 android:id="@+id/textView_signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
 
+                android:layout_margin="8dp"
 
                 android:fontFamily="@font/hkgroteskregular"
                 android:text="Email"
@@ -140,9 +145,10 @@
                 android:id="@+id/editText_Signup_Email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
 
 
+                android:layout_marginBottom="16dp"
                 android:ems="10"
                 android:fontFamily="@font/hkgroteskregular"
                 android:inputType="textEmailAddress"
@@ -153,10 +159,10 @@
                 android:id="@+id/textView_signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
 
                 android:fontFamily="@font/hkgroteskregular"
-                android:text="password"
+                android:text="Password"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/editText_signup_password"
@@ -166,8 +172,8 @@
                 android:id="@+id/editText_signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
 
+                android:layout_margin="8dp"
 
                 android:ems="10"
                 android:fontFamily="@font/hkgroteskregular"
@@ -179,11 +185,11 @@
                 android:id="@+id/textView_signup_confirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
 
 
                 android:fontFamily="@font/hkgroteskregular"
-                android:text="confirm Password"
+                android:text="Confirm Password"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/editText_signup_confirmPassword"
@@ -193,8 +199,9 @@
                 android:id="@+id/editText_signup_confirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
 
+                android:layout_marginBottom="32dp"
                 android:ems="10"
                 android:fontFamily="@font/hkgroteskregular"
                 android:inputType="textPassword"
@@ -203,34 +210,40 @@
 
             <Button
                 android:id="@+id/button_signup_signup"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
 
 
+                android:layout_marginBottom="24dp"
+                android:layout_marginStart="108dp"
                 android:background="@android:color/background_dark"
                 android:fontFamily="@font/hkgroteskregular"
                 android:text="Sign Up"
                 android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView_signup_login"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView_signup_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_margin="8dp"
                 android:fontFamily="@font/hkgroteskregular"
                 android:text="Already a member? Log In"
+                android:textAlignment="center"
                 android:textColor="@color/defaultBackgroundColor"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-        </LinearLayout>
-    </ScrollView><![CDATA[
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+    <![CDATA[
 
 
 

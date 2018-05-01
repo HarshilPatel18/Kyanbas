@@ -63,43 +63,6 @@ public class Signup extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         textView_login = findViewById(R.id.textView_signup_login);
         textView_login.setOnClickListener(new View.OnClickListener() {
             @Override
