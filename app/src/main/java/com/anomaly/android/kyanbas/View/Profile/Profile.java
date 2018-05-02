@@ -7,7 +7,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Header;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,10 +15,7 @@ import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
-import com.anomaly.android.kyanbas.View.Login.Login;
-import com.anomaly.android.kyanbas.View.Main.MainActivity;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -92,7 +88,7 @@ public class Profile extends AppCompatActivity {
                                         .load(Constants.URL_THUMBNAIL_IMAGE+dataJsonObject.get("profile_picture"))
                                         .fit()
                                         .centerCrop()
-                                        .placeholder(R.drawable.ic_art_image_placeholder)
+                                        .placeholder(R.drawable.ic_art_vector_placeholder)
                                         .into(imageViewUserDp);
 
 

@@ -47,10 +47,12 @@ public class RecyclerGridViewAdapter extends RecyclerView.Adapter<RecyclerGridVi
         holder.artUserTextView.setText("By "+art.getUser().getFirstName()+" "+art.getUser().getLastName());
         holder.priceTextView.setText("\u20B9 "+art.getPrice().toString());
 
+        final String image_url=art.getThumbnailPicture().replace("thumbnail","original");
+
         Picasso.get()
-                .load(Constants.URL_THUMBNAIL_IMAGE+art.getThumbnailPicture())
+                .load(Constants.URL_THUMBNAIL_IMAGE+image_url)
                 .fit()
-                .placeholder(R.drawable.ic_art_image_placeholder)
+                .placeholder(R.drawable.ic_art_vector_placeholder)
                 .into(holder.imageView);
 
 

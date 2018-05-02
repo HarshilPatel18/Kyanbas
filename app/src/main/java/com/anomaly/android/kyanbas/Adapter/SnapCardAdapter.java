@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anomaly.android.kyanbas.Modal.Art;
 import com.anomaly.android.kyanbas.Network.Constants;
@@ -50,17 +49,22 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
         holder.priceTextView.setText("\u20B9 "+art.getPrice().toString());
 
 
+        final String image_url=art.getThumbnailPicture().replace("thumbnail","original");
+
         Picasso.get()
-                .load(Constants.URL_THUMBNAIL_IMAGE+art.getThumbnailPicture())
+                .load(Constants.URL_THUMBNAIL_IMAGE+image_url)
                 .fit()
-                .placeholder(R.drawable.ic_art_image_placeholder)
+                .placeholder(R.drawable.ic_art_vector_placeholder)
                 .into(holder.imageView);
+
+
+
 
         holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public boolean onLongClick(View view) {
-                new ImagePreviewer().show(view.getContext(),holder.imageView,art.getName(),art.getUser().getFirstName()+" "+art.getUser().getLastName(),art.getPrice().toString());
+                new ImagePreviewer().show(view.getContext(),holder.imageView,art.getName(),art.getUser().getFirstName()+" "+art.getUser().getLastName(),art.getPrice().toString(),image_url);
                 return false;
             }
         });

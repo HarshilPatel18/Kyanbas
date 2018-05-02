@@ -1,9 +1,7 @@
 package com.anomaly.android.kyanbas.View.Main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -36,14 +34,11 @@ import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Login.Login;
 import com.anomaly.android.kyanbas.View.Profile.Profile;
-import com.anomaly.android.kyanbas.View.ViewArt.ViewArt;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.squareup.picasso.Picasso;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import android.view.View;
@@ -65,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
     NavigationView navigationView;
+    TabLayout tabLayout;
 
     View headerView;
     TextView navHeaderUsername;
@@ -76,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Tabs
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setVisibility(View.INVISIBLE);
+
         //Navigation Drawer
         mDrawerLayout=findViewById(R.id.drawerLayout);
         mToggle= new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
@@ -84,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         mToolbar=findViewById(R.id.nav_actionbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ImageView toolbarCart=findViewById(R.id.imagviewCartToolbar);
+        toolbarCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StyleableToast.makeText(getApplicationContext(),"Clicked on Cart",R.style.Success).show();
+            }
+        });
 
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
@@ -128,7 +135,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     }
 
     private void setCategoriesTabs() {
-           final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+
+           tabLayout.setVisibility(View.VISIBLE);
            final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
 
@@ -262,10 +271,13 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     public void onNetworkConnectionChanged(boolean isConnected) {
 
         if (isConnected) {
+
             setCategoriesTabs();
         }
         else {
-            Toast.makeText(this,"Not connected to internet !",Toast.LENGTH_SHORT).show();
+
+            StyleableToast.makeText(getApplicationContext(),"Not connected to internet !",R.style.Error).show();
+
         }
 
     }
@@ -291,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         else if(id==R.id.nav_cart){
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
 
-            startActivity(new Intent(MainActivity.this, ViewArt.class));
+            //startActivity(new Intent(MainActivity.this, ViewArt.class));
         }
 
         return false;
@@ -347,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                                         .load(Constants.URL_THUMBNAIL_IMAGE+dataJsonObject.get("profile_picture"))
                                         .fit()
                                         .centerCrop()
-                                        .placeholder(R.drawable.ic_art_image_placeholder)
+                                        .placeholder(R.drawable.ic_art_vector_placeholder)
                                         .into(navHeaderUserdp);
 
 
@@ -403,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         }
         else{
-            Toast.makeText(MainActivity.this, "Not Logged In !", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this, "Not Logged In !", Toast.LENGTH_LONG).show();
         }
 
     }

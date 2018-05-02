@@ -54,7 +54,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Profile.Profile" />
-        <activity android:name=".View.ViewArt.ViewArt"></activity>
+        <activity android:name=".View.ViewArt.ViewArt" />
     </application>
 
 </manifest>

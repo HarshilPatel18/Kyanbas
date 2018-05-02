@@ -4,166 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.anomaly.android.kyanbas.View.ViewArt.ViewArt">
+    tools:context="com.anomaly.android.kyanbas.View.ViewArt.ViewArt"
+    tools:layout_editor_absoluteY="25dp">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/button_buy_Art"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageview_art_image"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:gravity="center_horizontal"
-                android:scaleType="center" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView_Art_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="ArtName"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_Art_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="Price"
-                    android:textAlignment="viewEnd" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView_Art_by"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="artby"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView_Art_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/hkgroteskregular"
-                android:text="Description" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView_Highlights"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="Highlights"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView_available"
+                <ImageView
+                    android:id="@+id/imageViewArt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="Available"
-                    android:textAlignment="viewStart"
-                    android:textSize="16sp" />
+                    android:layout_height="400dp"
+                    android:adjustViewBounds="false"
+                    android:background="@color/colorPrimary"
+                    android:cropToPadding="false"
+                    android:padding="60dp"
+                    app:srcCompat="@drawable/ic_empty_data" />
 
-                <TextView
-                    android:id="@+id/textView_CategoryName"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ViewArtDetailsCardview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="CategoryName" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/textView_measurements"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="measurements" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/hkgroteskregular"
-                    android:text="weight" />
+                        <TextView
+                            android:id="@+id/textViewArtName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:layout_margin="5px"
+                            android:padding="5px"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
+        </ScrollView>
 
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </ScrollView>
+    <android.support.constraint.ConstraintLayout
 
-    <Button
-        android:id="@+id/button_buy_Art"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:fontFamily="@font/hkgroteskregular"
-        android:text="Buy"
-        android:textColor="@color/colorPrimary"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_AddToCart" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/button_AddToCart"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/colorPrimary"
-        android:fontFamily="@font/hkgroteskregular"
-        android:text="Add To Cart"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_buy_Art"
-        app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/buttonAddtoCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="start"
+            android:background="@color/colorPrimary"
+            android:elevation="2dp"
+            android:fontFamily="@font/robotoregular"
+            android:text="Add to Cart"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonWishlist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonWishlist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="1dp"
+            android:background="@color/colorPrimary"
+            android:elevation="2dp"
+            android:fontFamily="@font/robotoregular"
+            android:text="Wishlist"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonAddtoCart"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

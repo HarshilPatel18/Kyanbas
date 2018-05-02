@@ -13,13 +13,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
+import com.squareup.picasso.Picasso;
 
 public class ImagePreviewer {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
 
-    public void show(Context context, ImageView source, String artName, String artist, String artPrice) {
+    public void show(Context context, ImageView source, String artName, String artist, String artPrice,String imgurl) {
         BitmapDrawable background = ImagePreviewerUtils.getBlurredScreenDrawable(context, source.getRootView());
 
         View dialogView = LayoutInflater.from(context).inflate(R.layout.imageview_hold, null);
@@ -27,9 +29,17 @@ public class ImagePreviewer {
         TextView textArtName=dialogView.findViewById(R.id.textArtNamePreview);
         TextView textArtist=dialogView.findViewById(R.id.textArtistNamePreview);
         TextView textPrice=dialogView.findViewById(R.id.textPriceArtPreview);
+        String imgURL=imgurl;
 
         Drawable copy = source.getDrawable().getConstantState().newDrawable();
         imageView.setImageDrawable(copy);
+
+        /*Picasso.get()
+                .load(Constants.URL_THUMBNAIL_IMAGE+imgURL)
+                .fit()
+                .placeholder(R.drawable.ic_art_vector_placeholder)
+                .into(imageView);*/
+
         textArtName.setText(artName);
         textArtist.setText("By "+artist);
         textPrice.setText("\u20B9 "+artPrice);
