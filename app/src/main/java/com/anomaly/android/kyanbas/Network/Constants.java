@@ -17,9 +17,16 @@ public class Constants {
     public static final String URL_USER_INFO=API_ROOT_URL+"users/me";
     //art
     public static final String URL_ART_LIST=API_ROOT_URL+"art/list";
+
     public static final String URL_ARTBY_CATEGORY=API_ROOT_URL+"art/category/list/";
+
     public static final String URL_PRODUCT_BY_CATEGORY=API_ROOT_URL+"product/category/list/";
+
     public static final String URL_THUMBNAIL_IMAGE="http://staging.rentedcanvas.com/";
+
     public static final String URL_ARTBY_NICENAME=API_ROOT_URL+"product/view/";
+
+    public static final String URL_VIEW_ART=API_ROOT_URL+"art/view/";
+
 
 }

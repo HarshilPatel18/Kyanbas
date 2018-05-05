@@ -1,4 +1,4 @@
-package com.anomaly.android.kyanbas.View.Signup;
+package com.anomaly.android.kyanbas.View.Authentication;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -21,7 +21,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
-import com.anomaly.android.kyanbas.View.Login.Login;
 
 import java.util.HashMap;
 import java.util.Map;

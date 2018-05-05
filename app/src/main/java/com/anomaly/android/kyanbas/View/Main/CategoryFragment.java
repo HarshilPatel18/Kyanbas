@@ -125,7 +125,7 @@ public class CategoryFragment extends Fragment {
 
 
                                 User user=new User(producJson.getInt("user_id"));
-                                Art art=new Art(producJson.getInt("id"),producJson.getString("name"),producJson.getString("thumbnail_picture"),producJson.getString("description"),producJson.getInt("price"),user);
+                                Art art=new Art(producJson.getInt("id"),producJson.getString("name"),producJson.getString("thumbnail_picture"),producJson.getString("description"),producJson.getInt("price"),producJson.getString("nicename"),user);
                                 //Toast.makeText(getContext(),user.getFirstName(),Toast.LENGTH_SHORT);
                                 listArt.add(art);
 

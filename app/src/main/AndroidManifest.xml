@@ -30,8 +30,8 @@
         </receiver>
 
         <activity android:name=".View.Main.MainActivity" />
-        <activity android:name=".View.Login.Login" />
-        <activity android:name=".View.Signup.Signup" />
+        <activity android:name=".View.Authentication.Login" />
+        <activity android:name=".View.Authentication.Signup" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -55,6 +55,7 @@
         </activity>
         <activity android:name=".View.Profile.Profile" />
         <activity android:name=".View.ViewArt.ViewArt" />
+        <activity android:name=".View.Profile.CartActivity"></activity>
     </application>
 
 </manifest>

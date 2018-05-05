@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment{
                             JSONObject userJson=artJson.getJSONObject("user");
 
                             User user=new User(userJson.getInt("id"),userJson.getString("first_name"),userJson.getString("last_name"),userJson.getString("profile_picture"),userJson.getString("thumbnail_picture"),userJson.getString("nicename"));
-                            Art art=new Art(artJson.getInt("id"),artJson.getString("name"),artJson.getString("thumbnail_picture"),artJson.getString("description"),artJson.getInt("price"),user);
+                            Art art=new Art(artJson.getInt("id"),artJson.getString("name"),artJson.getString("thumbnail_picture"),artJson.getString("description"),artJson.getInt("price"),artJson.getString("nicename"),user);
                             //Toast.makeText(mContext,user.getFirstName(),Toast.LENGTH_SHORT);
                             arts.add(art);
                         }

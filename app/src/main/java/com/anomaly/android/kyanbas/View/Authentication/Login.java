@@ -1,4 +1,4 @@
-package com.anomaly.android.kyanbas.View.Login;
+package com.anomaly.android.kyanbas.View.Authentication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,9 +21,6 @@ import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
-import com.anomaly.android.kyanbas.View.Main.MainActivity;
-import com.anomaly.android.kyanbas.View.Signup.Signup;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;

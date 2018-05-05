@@ -1,6 +1,7 @@
 package com.anomaly.android.kyanbas.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
@@ -14,7 +15,8 @@ import android.widget.TextView;
 import com.anomaly.android.kyanbas.Modal.Art;
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
-import com.anomaly.android.kyanbas.View.ImagePreview.ImagePreviewer;
+import com.anomaly.android.kyanbas.View.ImageViews.ImagePreviewer;
+import com.anomaly.android.kyanbas.View.ViewArt.ViewArt;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -66,6 +68,30 @@ public class SnapCardAdapter extends RecyclerView.Adapter<SnapCardAdapter.ViewHo
             public boolean onLongClick(View view) {
                 new ImagePreviewer().show(view.getContext(),holder.imageView,art.getName(),art.getUser().getFirstName()+" "+art.getUser().getLastName(),art.getPrice().toString(),image_url);
                 return false;
+            }
+        });
+
+        final Intent intentViewArt=new Intent(mContext, ViewArt.class);
+        intentViewArt.putExtra("nicename",art.getNicename());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.getContext().startActivity(intentViewArt);
+            }
+        });
+
+        holder.nameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.getContext().startActivity(intentViewArt);
+            }
+        });
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.getContext().startActivity(intentViewArt);
             }
         });
 

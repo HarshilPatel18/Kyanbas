@@ -32,7 +32,7 @@ import com.anomaly.android.kyanbas.Network.ResponseKeys;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
-import com.anomaly.android.kyanbas.View.Login.Login;
+import com.anomaly.android.kyanbas.View.Authentication.Login;
 import com.anomaly.android.kyanbas.View.Profile.Profile;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.squareup.picasso.Picasso;
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private void setCategoriesTabs() {
 
 
-           tabLayout.setVisibility(View.VISIBLE);
+
            final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
 
@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                            Category category=new Category(jo.getInt(ResponseKeys.CATEGORY_ID),jo.getString(ResponseKeys.CATEGORY_NAME),jo.getInt(ResponseKeys.CATEGORY_PARENT_ID),jo.getString(ResponseKeys.CATEGORY_DESC),jo.getString(ResponseKeys.CATEGORY_NICENAME));
                            adapter.addFragment(CategoryFragment.newInstance(category.getId()),category.getName());
                        }
+                       tabLayout.setVisibility(View.VISIBLE);
                        viewPager.setAdapter(adapter);
                        tabLayout.setupWithViewPager(viewPager);
 

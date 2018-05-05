@@ -39,12 +39,13 @@ public class Art {
         this.available = available;
     }
 
-    public Art(Integer id, String name, String thumbnailPicture,String description,int price,User user) {
+    public Art(Integer id, String name, String thumbnailPicture,String description,int price,String nicename,User user) {
         this.id = id;
         this.name = name;
         this.thumbnailPicture = thumbnailPicture;
         this.price = price;
         this.user=user;
+        this.nicename=nicename;
 
     }
 

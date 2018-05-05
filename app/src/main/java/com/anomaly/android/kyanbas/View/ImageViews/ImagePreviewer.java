@@ -1,4 +1,4 @@
-package com.anomaly.android.kyanbas.View.ImagePreview;
+package com.anomaly.android.kyanbas.View.ImageViews;
 
 
 import android.app.Dialog;
@@ -13,9 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.R;
-import com.squareup.picasso.Picasso;
 
 public class ImagePreviewer {
 

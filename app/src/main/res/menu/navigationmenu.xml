@@ -17,7 +17,9 @@
         android:icon="@drawable/ic_navbar_myorders_24dp"
         android:title="My Orders"/>
 
-
+    <item android:id="@+id/nav_coupons"
+        android:icon="@drawable/ic_discount_voucher"
+        android:title="Coupons"></item>
 
 
 
