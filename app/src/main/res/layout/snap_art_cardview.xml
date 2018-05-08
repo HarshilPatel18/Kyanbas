@@ -44,10 +44,11 @@
             android:layout_margin="5px"
 
 
+            android:fontFamily="@font/robotoregular"
             android:padding="5px"
+
+
             android:text="Art Name"
-
-
             android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -63,6 +64,7 @@
             android:layout_below="@+id/ArtNameCardview"
             android:layout_margin="5px"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/robotoregular"
             android:padding="5px"
             android:text="By Author"
             android:textSize="12sp"
@@ -82,6 +84,7 @@
             android:layout_margin="5px"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/robotomedium"
             android:padding="5px"
             android:text="Price"
             android:textColor="@color/colorPrimaryDark"

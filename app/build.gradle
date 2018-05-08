@@ -60,7 +60,6 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
     compile 'com.google.android.gms:play-services-auth:15.0.0'
 
-    compile 'com.commit451:PhotoView:1.2.4'
 
 
 }

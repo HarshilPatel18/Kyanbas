@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginBottom="18dp"
-        android:fontFamily="@font/robotoregular"
+        android:fontFamily="@font/hkgroteskemibold"
         android:text="Log In"
         android:textAppearance="@android:style/TextAppearance.Material"
         android:textSize="18sp"
@@ -48,7 +48,7 @@
         android:id="@+id/imageviewProfileNavDrawer"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="8dp"
         android:padding="5dp"
         app:layout_constraintBottom_toTopOf="@+id/textviewUsernameNavDrawer"
         app:layout_constraintEnd_toEndOf="parent"

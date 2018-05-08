@@ -26,6 +26,7 @@
             android:cropToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageViewSearchToolbar"
+            app:layout_constraintHorizontal_bias="0.55"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_kyanbas_logo" />
@@ -37,21 +38,41 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imagviewCartToolbar"
+            app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_search_black_24dp" />
 
-        <ImageView
-            android:id="@+id/imagviewCartToolbar"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="24dp"
-            android:src="@drawable/ic_shopping_cart"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/imagviewCartToolbar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+
+                app:srcCompat="@drawable/ic_shopping_cart" />
+
+            <TextView
+                android:id="@+id/textViewCartItemCount"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/badge_item_count"
+                android:fontFamily="@font/robotobold"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.Toolbar>

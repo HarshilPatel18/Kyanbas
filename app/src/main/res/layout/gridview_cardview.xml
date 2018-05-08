@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="200dp"
-    android:layout_height="290dp"
-    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
     android:orientation="horizontal"
     app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -14,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="?android:selectableItemBackground"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="15dp">
 
         <ImageView
             android:id="@+id/GridViewImage"
@@ -42,10 +43,11 @@
             android:layout_margin="5px"
 
 
+            android:fontFamily="@font/robotoregular"
             android:padding="5px"
+
+
             android:text="Art Name"
-
-
             android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -61,6 +63,7 @@
             android:layout_below="@+id/ArtNameCardview"
             android:layout_margin="5px"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/robotoregular"
             android:padding="5px"
             android:text="By Author"
             android:textSize="12sp"
@@ -80,6 +83,7 @@
             android:layout_margin="5px"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/robotomedium"
             android:padding="5px"
             android:text="Price"
             android:textColor="@color/colorPrimaryDark"

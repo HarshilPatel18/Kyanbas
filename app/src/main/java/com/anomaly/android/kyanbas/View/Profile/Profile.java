@@ -125,7 +125,7 @@ public class Profile extends AppCompatActivity {
             /** Passing some request headers* */
             @Override
             public Map<String,String> getHeaders() throws AuthFailureError {
-                String bearer = "Bearer ".concat(SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim());
+                String bearer = "Bearer ".concat(SharedPrefManager.getInstance(getApplicationContext()).getAccessToken().trim());
                 Map headers = new HashMap();
                 headers.put("Authorization",bearer);
                 return headers;

@@ -17,7 +17,7 @@
         <item name="solidBackground">true</item>
 
         <item name="iconLeft">@drawable/ic_done_black_24dp</item>
-        <item name="length">LONG</item>         ENUM: LONG | SHORT
+        <item name="length">SHORT</item>         ENUM: LONG | SHORT
         <item name="cornerRadius">20dp</item>
     </style>
 
@@ -30,7 +30,18 @@
     <item name="solidBackground">true</item>
 
     <item name="iconLeft">@drawable/ic_error_black_24dp</item>
-    <item name="length">LONG</item>         ENUM: LONG | SHORT
+    <item name="length">SHORT</item>         ENUM: LONG | SHORT
+    </style>
+
+
+    <style name="KyanbasDark">
+        <!--<item name="textBold">true</item>-->
+        <item name="textColor">#fff</item>
+        <!--<item name="textFont">@font/dosier</item>-->
+        <item name="textSize">14sp</item>
+        <item name="colorBackground">@color/colorPrimaryDark</item>
+        <item name="solidBackground">true</item>
+
     </style>
 
 

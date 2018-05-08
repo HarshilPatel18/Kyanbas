@@ -19,6 +19,6 @@ public class ResponseKeys {
     public static final String CATEGORY_NICENAME = "nicename";
 
     //Product Keys
-
+    public static final String NICENAME = "nicename";
 
 }

@@ -62,9 +62,7 @@ public class HomeFragment extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false); inflater.inflate(R.layout.fragment_home, container, false);
         mContext=container.getContext();
-
         emptyview=view.findViewById(R.id.emptyViewLayout);
-
 
         return view;
     }
@@ -74,6 +72,7 @@ public class HomeFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.home_recyclerView);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.Homeswipe_refresh_layout);
+
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         mRecyclerView.setHasFixedSize(true);

@@ -13,8 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.anomaly.android.kyanbas.Network.Constants;
@@ -37,6 +43,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -224,7 +231,7 @@ public class Login extends AppCompatActivity {
         progressDialog.setMessage("Logging in......");
         progressDialog.show();
 
-        StringRequest stringRequest=new StringRequest(
+        StringRequest loginRequest=new StringRequest(
                 Request.Method.POST,
                 Constants.URL_LOGIN,
                 new Response.Listener<String>() {
@@ -232,7 +239,7 @@ public class Login extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         progressDialog.dismiss();
-                        Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -244,9 +251,9 @@ public class Login extends AppCompatActivity {
                                 else {
                                     JSONObject dataJsonObject=jsonObject.getJSONObject("data");
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN));
-                                    //===========================
-                                    String key=SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken();
-                                    Toast.makeText(Login.this,"Volly Login Successful !"+key,Toast.LENGTH_LONG).show();
+                                    SharedPrefManager.getInstance(getApplicationContext()).tokenType(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN_TYPE));
+
+                                    StyleableToast.makeText(getApplicationContext(),"Login Successful !", R.style.Success).show();
                                     finish();
                                 }
 
@@ -262,7 +269,22 @@ public class Login extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         progressDialog.dismiss();
-                        Toast.makeText(Login.this,"Invalid Credentials !",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Login.this,"Invalid Credentials !",Toast.LENGTH_LONG).show();
+                        if (error instanceof NetworkError) {
+                            Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof ServerError) {
+
+                            Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(getApplicationContext(), "AuthFailure Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(getApplicationContext(), "Parse Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof NoConnectionError) {
+                            Toast.makeText(getApplicationContext(), "NoConnection Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof TimeoutError) {
+                            Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_SHORT).show();
+
+                        }
 
                     }
                 }
@@ -277,7 +299,10 @@ public class Login extends AppCompatActivity {
 
         };
 
-        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy
+                        .DEFAULT_BACKOFF_MULT));
+        RequestHandler.getInstance(this).addToRequestQueue(loginRequest);
 
     }
 

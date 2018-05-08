@@ -33,6 +33,7 @@ import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Authentication.Login;
+import com.anomaly.android.kyanbas.View.ImageViews.PicassoCircleTransformation;
 import com.anomaly.android.kyanbas.View.Profile.Profile;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.squareup.picasso.Picasso;
@@ -59,12 +60,13 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
-    NavigationView navigationView;
-    TabLayout tabLayout;
-
-    View headerView;
+    private NavigationView navigationView;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private View headerView;
+    private View connErrorview;
     TextView navHeaderUsername;
-    ImageView navHeaderUserdp;
+    ImageView navHeaderUserProfilePic;
 
 
     @Override
@@ -72,9 +74,15 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //View
+        connErrorview=findViewById(R.id.connectionErrorLayout);
+        connErrorview.setVisibility(View.VISIBLE);
+
         //Tabs
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         tabLayout.setVisibility(View.INVISIBLE);
+        viewPager.setVisibility(View.INVISIBLE);
 
         //Navigation Drawer
         mDrawerLayout=findViewById(R.id.drawerLayout);
@@ -102,146 +110,13 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         headerView=navigationView.getHeaderView(0);
         navHeaderUsername=(TextView)headerView.findViewById(R.id.textviewUsernameNavDrawer);
-        navHeaderUserdp = headerView.findViewById(R.id.imageviewProfileNavDrawer);
-
-        //onclick here===================================================
-
-        navHeaderUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-                    startActivity(new Intent(MainActivity.this,Profile.class));
-
-                }
-                else{
-                    startActivity(new Intent(MainActivity.this,Login.class));
-                }
-
-            }
-        });
-
-
-
-
-
-
-
-
+        navHeaderUserProfilePic = headerView.findViewById(R.id.imageviewProfileNavDrawer);
 
 
 
 
     }
 
-    private void setCategoriesTabs() {
-
-
-
-           final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-
-
-
-           //Adding Tab Fragments
-
-           StringRequest stringRequest= new StringRequest(Request.Method.GET, Constants.URL_CATEGORY_PARENT, new Response.Listener<String>() {
-               @Override
-               public void onResponse(String response) {
-
-                   try {
-
-                       ViewPagerAdapter adapter= new ViewPagerAdapter(getSupportFragmentManager());
-                       adapter.addFragment(HomeFragment.newInstance("Home"),"Home");
-
-                       JSONObject jsonObject = new JSONObject(response);
-                       JSONArray jsonArray = jsonObject.getJSONArray(ResponseKeys.JSON_DATA_WRAPPER);
-
-                       for (int i = 0; i < jsonArray.length(); i++) {
-
-                           JSONObject jo = jsonArray.getJSONObject(i);
-                           Category category=new Category(jo.getInt(ResponseKeys.CATEGORY_ID),jo.getString(ResponseKeys.CATEGORY_NAME),jo.getInt(ResponseKeys.CATEGORY_PARENT_ID),jo.getString(ResponseKeys.CATEGORY_DESC),jo.getString(ResponseKeys.CATEGORY_NICENAME));
-                           adapter.addFragment(CategoryFragment.newInstance(category.getId()),category.getName());
-                       }
-                       tabLayout.setVisibility(View.VISIBLE);
-                       viewPager.setAdapter(adapter);
-                       tabLayout.setupWithViewPager(viewPager);
-
-                   } catch (JSONException e) {
-                       e.printStackTrace();
-                       Toast.makeText(getApplicationContext(),"Response Error : "+e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-                   }
-               }
-           }, new Response.ErrorListener() {
-               @Override
-               public void onErrorResponse(VolleyError error) {
-                   Toast.makeText(getApplicationContext(),"Network issue",Toast.LENGTH_SHORT).show();
-               }
-           }){
-               @Override
-               public Priority getPriority() {
-                   return Priority.HIGH;
-               }
-
-               @Override
-               protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                   try {
-                       Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
-                       if (cacheEntry == null) {
-                           cacheEntry = new Cache.Entry();
-                       }
-                       final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
-                       final long cacheExpired = 24 * 60 * 60 * 1000; // in 24 hours this cache entry expires completely
-                       long now = System.currentTimeMillis();
-                       final long softExpire = now + cacheHitButRefreshed;
-                       final long ttl = now + cacheExpired;
-                       cacheEntry.data = response.data;
-                       cacheEntry.softTtl = softExpire;
-                       cacheEntry.ttl = ttl;
-                       String headerValue;
-                       headerValue = response.headers.get("Date");
-                       if (headerValue != null) {
-                           cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
-                       }
-                       headerValue = response.headers.get("Last-Modified");
-                       if (headerValue != null) {
-                           cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
-                       }
-                       cacheEntry.responseHeaders = response.headers;
-                       final String jsonString = new String(response.data,
-                               HttpHeaderParser.parseCharset(response.headers));
-                       return Response.success(jsonString, cacheEntry);
-                   } catch (UnsupportedEncodingException e) {
-                       return Response.error(new ParseError(e));
-                   }
-               }
-
-               @Override
-               protected void deliverResponse(String response) {
-                   super.deliverResponse(response);
-               }
-
-               @Override
-               public void deliverError(VolleyError error) {
-                   if (error instanceof NoConnectionError) {
-                       Cache.Entry entry = this.getCacheEntry();
-                       if(entry != null) {
-                           Response<String> response = parseNetworkResponse(new NetworkResponse(entry.data, entry.responseHeaders));
-                           deliverResponse(response.result);
-                           return;
-                       }
-                   }
-                   super.deliverError(error);
-               }
-
-               @Override
-               protected VolleyError parseNetworkError(VolleyError volleyError) {
-                   return super.parseNetworkError(volleyError);
-               }
-           };
-
-           RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -273,9 +148,12 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         if (isConnected) {
 
+            connErrorview.setVisibility(View.GONE);
             setCategoriesTabs();
+            onStart();
         }
         else {
+
 
             StyleableToast.makeText(getApplicationContext(),"Not connected to internet !",R.style.Error).show();
 
@@ -297,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
 
-            Toast.makeText(this,"You Are Succesfully Logged Out",Toast.LENGTH_SHORT).show();
+            StyleableToast.makeText(this,"You Are Succesfully Logged Out",R.style.Error).show();
             onStart();
         }
 
@@ -322,8 +200,174 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-    //header==================================================================================================================================
+        if(ConnectivityReceiver.isConnected())
+        {
+            if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+
+                Constants.testToken(getApplicationContext());
+
+                if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+
+                    getUserInfo();
+
+                    navHeaderUsername.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            startActivity(new Intent(MainActivity.this, Profile.class));
+                        }
+                    });
+
+
+                    navHeaderUserProfilePic.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            startActivity(new Intent(MainActivity.this, Profile.class));
+                        }
+                    });
+
+                }
+
+            }
+            else{
+
+                navHeaderUsername.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        startActivity(new Intent(MainActivity.this, Login.class));
+                    }
+                });
+
+
+                navHeaderUserProfilePic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        startActivity(new Intent(MainActivity.this, Login.class));
+                    }
+                });
+            }
+        }
+
+
+
+    }
+
+
+    //Requests==================================================================================================================================
+
+
+    private void setCategoriesTabs() {
+
+        connErrorview.setVisibility(View.GONE);
+
+        //Adding Tab Fragments
+
+        StringRequest stringRequest= new StringRequest(Request.Method.GET, Constants.URL_CATEGORY_PARENT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+
+                    ViewPagerAdapter adapter= new ViewPagerAdapter(getSupportFragmentManager());
+                    adapter.addFragment(HomeFragment.newInstance("Home"),"Home");
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray(ResponseKeys.JSON_DATA_WRAPPER);
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject jo = jsonArray.getJSONObject(i);
+                        Category category=new Category(jo.getInt(ResponseKeys.CATEGORY_ID),jo.getString(ResponseKeys.CATEGORY_NAME),jo.getInt(ResponseKeys.CATEGORY_PARENT_ID),jo.getString(ResponseKeys.CATEGORY_DESC),jo.getString(ResponseKeys.CATEGORY_NICENAME));
+                        adapter.addFragment(CategoryFragment.newInstance(category.getId()),category.getName());
+                    }
+                    tabLayout.setVisibility(View.VISIBLE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    viewPager.setAdapter(adapter);
+                    tabLayout.setupWithViewPager(viewPager);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Response Error : "+e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Network issue",Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Priority getPriority() {
+                return Priority.HIGH;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
+                    if (cacheEntry == null) {
+                        cacheEntry = new Cache.Entry();
+                    }
+                    final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
+                    final long cacheExpired = 24 * 60 * 60 * 1000; // in 24 hours this cache entry expires completely
+                    long now = System.currentTimeMillis();
+                    final long softExpire = now + cacheHitButRefreshed;
+                    final long ttl = now + cacheExpired;
+                    cacheEntry.data = response.data;
+                    cacheEntry.softTtl = softExpire;
+                    cacheEntry.ttl = ttl;
+                    String headerValue;
+                    headerValue = response.headers.get("Date");
+                    if (headerValue != null) {
+                        cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    headerValue = response.headers.get("Last-Modified");
+                    if (headerValue != null) {
+                        cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    cacheEntry.responseHeaders = response.headers;
+                    final String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers));
+                    return Response.success(jsonString, cacheEntry);
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            @Override
+            protected void deliverResponse(String response) {
+                super.deliverResponse(response);
+            }
+
+            @Override
+            public void deliverError(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    Cache.Entry entry = this.getCacheEntry();
+                    if(entry != null) {
+                        Response<String> response = parseNetworkResponse(new NetworkResponse(entry.data, entry.responseHeaders));
+                        deliverResponse(response.result);
+                        return;
+                    }
+                }
+                super.deliverError(error);
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                return super.parseNetworkError(volleyError);
+            }
+        };
+
+        RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+    }
 
     private void getUserInfo(){
 
@@ -347,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                                 //code here================================================================
 
                                 JSONObject dataJsonObject=jsonObject.getJSONObject("data");
-                                Toast.makeText(MainActivity.this,dataJsonObject.toString(),Toast.LENGTH_LONG).show();
+                                //Toast.makeText(MainActivity.this,dataJsonObject.toString(),Toast.LENGTH_LONG).show();
 
 
                                 String name = dataJsonObject.get("first_name")+" "+dataJsonObject.get("last_name");
@@ -358,10 +402,11 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
                                 Picasso.get()
                                         .load(Constants.URL_THUMBNAIL_IMAGE+dataJsonObject.get("profile_picture"))
+                                        .transform(new PicassoCircleTransformation())
                                         .fit()
                                         .centerCrop()
                                         .placeholder(R.drawable.ic_art_vector_placeholder)
-                                        .into(navHeaderUserdp);
+                                        .into(navHeaderUserProfilePic);
 
 
                             }
@@ -375,8 +420,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                     public void onErrorResponse(VolleyError error) {
 
                         Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-
-
                         error.printStackTrace();
 
                     }
@@ -392,7 +435,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             /** Passing some request headers* */
             @Override
             public Map<String,String> getHeaders() throws AuthFailureError {
-                String bearer = "Bearer ".concat(SharedPrefManager.getInstance(getApplicationContext()).GetAccessToken().trim());
+                String bearer = SharedPrefManager.getInstance(getApplicationContext()).getTokenType()+SharedPrefManager.getInstance(getApplicationContext()).getAccessToken().trim();
                 Map headers = new HashMap();
                 headers.put("Authorization",bearer);
                 return headers;
@@ -404,20 +447,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //changing navigation drawer value here==================================
 
 
-        if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
 
-            getUserInfo();
-
-        }
-        else{
-            //Toast.makeText(MainActivity.this, "Not Logged In !", Toast.LENGTH_LONG).show();
-        }
-
-    }
 }

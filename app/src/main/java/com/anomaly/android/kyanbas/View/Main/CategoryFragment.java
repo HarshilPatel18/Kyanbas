@@ -13,13 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
@@ -94,6 +98,7 @@ public class CategoryFragment extends Fragment {
     public void displayArtbyCategory()
     {
         listArt = new ArrayList<>();
+        emptyview.setVisibility(View.GONE);
         //Toast.makeText(mContext,category,Toast.LENGTH_SHORT).show();
 
         swipeRefreshLayout.setRefreshing(true);
@@ -164,6 +169,20 @@ public class CategoryFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(mContext,"Network issue : "+error.getMessage(),Toast.LENGTH_SHORT).show();
+                if( error instanceof NetworkError) {
+                    Toast.makeText(mContext,"Network Error",Toast.LENGTH_SHORT).show();
+                } else if( error instanceof ServerError) {
+
+                    Toast.makeText(mContext,"Server Error",Toast.LENGTH_SHORT).show();
+                } else if( error instanceof AuthFailureError) {
+                    Toast.makeText(mContext,"AuthFailure Error",Toast.LENGTH_SHORT).show();
+                } else if( error instanceof ParseError) {
+                    Toast.makeText(mContext,"Parse Error",Toast.LENGTH_SHORT).show();
+                } else if( error instanceof NoConnectionError) {
+                    Toast.makeText(mContext,"NoConnection Error",Toast.LENGTH_SHORT).show();
+                } else if( error instanceof TimeoutError) {
+                    Toast.makeText(mContext,"Timeout Error",Toast.LENGTH_SHORT).show();
+                }
             }
         }){
 
@@ -241,6 +260,7 @@ public class CategoryFragment extends Fragment {
             recyclerGrid.setVisibility(View.VISIBLE);
 
         }
+
     }
 
 

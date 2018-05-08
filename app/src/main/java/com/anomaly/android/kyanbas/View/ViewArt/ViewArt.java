@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,8 +36,9 @@ public class ViewArt extends AppCompatActivity {
             toolbarText, artMesurements,artWeight,artSpecs,
             artSpecDesc,artAvailable,artDeliveryType;
     private ImageView artImage,userProfileImage;
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout,viewArtSpecs;
     private android.support.v7.widget.Toolbar toolbar;
+    private Button addToCart,addToWishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class ViewArt extends AppCompatActivity {
 
         //BindView
         linearLayout = findViewById(R.id.linearLayoutViewArt);
+        viewArtSpecs=findViewById(R.id.linearLayoutViewArtSpecs);
         emptyview = findViewById(R.id.emptyViewLayout);
         artName = findViewById(R.id.textViewArtName);
         artPrice = findViewById(R.id.textViewArtPrice);
@@ -69,6 +72,8 @@ public class ViewArt extends AppCompatActivity {
         artDeliveryType=findViewById(R.id.textViewArtDeliveryType);
         artImage = findViewById(R.id.imageViewArt);
         userProfileImage = findViewById(R.id.imageViewArtUserProfile);
+        addToCart=findViewById(R.id.buttonAddtoCart);
+        addToWishlist=findViewById(R.id.buttonWishlist);
 
 
         Bundle bundle=getIntent().getExtras();
@@ -117,8 +122,8 @@ public class ViewArt extends AppCompatActivity {
                     artPrice.setText("\u20B9 "+String.valueOf(productJson.getInt("price")));
                     artDesc.setText(productJson.getString("description"));
 
-                    artAvailable.setText("Availablity  :  "+productJson.getString("available"));
-                    artDeliveryType.setText("Delivery Type  :  "+productJson.getString("delivery_type"));
+                    artAvailable.setText("Currently  "+productJson.getString("available"));
+                    artDeliveryType.setText("Delivery type  :  "+Constants.firstLetterCaps(productJson.getString("delivery_type")));
 
                     if (productJson.getString("measurements")!="null")
                     {
@@ -143,14 +148,21 @@ public class ViewArt extends AppCompatActivity {
 
                     if(productJson.getInt("has_specification")==1)
                     {
-                        JSONObject specsJson=productJson.getJSONObject("specifications");
-                        artSpecs.setText(specsJson.getString("name")+" : "+specsJson.getString("value"));
-                        artSpecDesc.setText(specsJson.getString("description"));
+                        if(!productJson.isNull("specifications"))
+                        {
+                            viewArtSpecs.setVisibility(View.VISIBLE);
+                            JSONObject specsJson=productJson.getJSONObject("specifications");
+                            artSpecs.setText(Constants.firstLetterCaps(specsJson.getString("name"))+" : "+Constants.firstLetterCaps(specsJson.getString("value")));
+                            artSpecDesc.setText(specsJson.getString("description"));
+                        }
+                        else {
+                            viewArtSpecs.setVisibility(View.GONE);
+                        }
+
                     }
                     else
                     {
-                        artSpecs.setText("Not Available");
-                        artSpecDesc.setVisibility(View.INVISIBLE);
+                        viewArtSpecs.setVisibility(View.GONE);
                     }
 
 

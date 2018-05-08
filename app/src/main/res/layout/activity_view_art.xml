@@ -1,211 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundXD"
+    tools:context="com.anomaly.android.kyanbas.View.ViewArt.ViewArt"
+    tools:layout_editor_absoluteY="25dp">
+
+
+    <include
+        android:id="@+id/include"
+
+        layout="@layout/art_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.anomaly.android.kyanbas.View.ViewArt.ViewArt"
-        tools:layout_editor_absoluteY="25dp">
+        android:visibility="gone" />
 
-
+    <LinearLayout
+        android:id="@+id/linearLayoutViewArt"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <include
-            android:id="@+id/include"
-
-            layout="@layout/art_empty_view"
+            layout="@layout/toolbar_activity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:id="@+id/linearLayoutViewArt"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            >
 
-            <include
-                layout="@layout/toolbar_activity"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <ScrollView
-                android:id="@+id/scrollView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp">
 
-                <LinearLayout
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ViewArtDetailsCardview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    app:cardCornerRadius="2dp">
 
 
-                    <ImageView
-                        android:id="@+id/imageViewArt"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
-                        android:adjustViewBounds="false"
-                        android:background="@color/colorPrimary"
-                        android:cropToPadding="false"
-                        android:padding="60dp"
-                        app:srcCompat="@drawable/ic_empty_data"
-                        android:layout_centerVertical="true"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp">
 
-                        android:layout_centerHorizontal="true"/>
+                        <ImageView
+                            android:id="@+id/imageViewArt"
+                            android:layout_width="match_parent"
+                            android:layout_height="400dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:adjustViewBounds="false"
+                            android:background="@color/colorPrimary"
+                            android:cropToPadding="false"
+                            android:padding="60dp"
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/ViewArtDetailsCardview"
+
+                            app:srcCompat="@drawable/ic_empty_data" />
+
+                        <TextView
+                            android:id="@+id/textViewArtName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:fontFamily="@font/robotoregular"
+                            android:layout_marginTop="5dp"
+                            android:padding="5dp"
+                            android:paddingLeft="5dp"
+                            android:text="Art Name"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textViewArtPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:fontFamily="@font/robotobold"
+                            android:padding="5dp"
+                            android:paddingLeft="5dp"
+                            android:text="Price"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/textViewArtAvailable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:fontFamily="@font/robotoregular"
+                            android:paddingLeft="5dp"
+                            android:text="Availablity"
+                            android:textColor="#5c5c5c"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textViewArtDeliveryType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:fontFamily="@font/robotoregular"
+                            android:paddingLeft="5dp"
+                            android:text="Delivery"
+                            android:textColor="#5c5c5c"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ViewArtDescCardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    app:cardCornerRadius="2dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
-                        android:elevation="4dp"
-                        android:padding="20dp"
-                        app:cardCornerRadius="2dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp">
+
+                        <TextView
+                            android:id="@+id/textViewDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:fontFamily="@font/robotomedium"
+                            android:padding="5dp"
+                            android:text="Details"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="15sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="5dp"
+                            android:background="#c1c1c1" />
+
+                        <TextView
+                            android:id="@+id/textViewArtDesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/robotoregular"
+                            android:padding="5dp"
+                            android:text="Art Description"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textViewArtMesurements"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:fontFamily="@font/robotoregular"
+                            android:padding="5dp"
+                            android:text="Art Mesurements"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textViewArtWeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:fontFamily="@font/robotoregular"
+                            android:padding="5dp"
+                            android:text="Art Weight"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14sp" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:id="@+id/linearLayoutViewArtSpecs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginBottom="5dp"
-                            android:paddingBottom="5dp"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="5dp">
-
-                            <TextView
-                                android:id="@+id/textViewArtName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:fontFamily="@font/robotoregular"
-
-                                android:padding="5dp"
-                                android:text="Art Name"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/textViewArtPrice"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:fontFamily="@font/robotobold"
-                                android:padding="5dp"
-                                android:paddingLeft="5dp"
-                                android:text="Price"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:id="@+id/textViewArtAvailable"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:fontFamily="@font/robotoregular"
-                                android:paddingLeft="5dp"
-                                android:text="Availablity"
-                                android:textColor="#5c5c5c"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/textViewArtDeliveryType"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:fontFamily="@font/robotoregular"
-                                android:paddingLeft="5dp"
-                                android:text="Delivery"
-                                android:textColor="#5c5c5c"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/ViewArtDescCardview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:elevation="4dp"
-                        android:padding="20dp"
-                        app:cardCornerRadius="2dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp">
-
-                            <TextView
-                                android:id="@+id/textViewDetails"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:fontFamily="@font/robotomedium"
-                                android:padding="5dp"
-                                android:text="Details"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="15sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_margin="5dp"
-                                android:background="#c1c1c1" />
-
-                            <TextView
-                                android:id="@+id/textViewArtDesc"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:fontFamily="@font/robotoregular"
-                                android:padding="5dp"
-                                android:text="Art Description"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/textViewArtMesurements"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:fontFamily="@font/robotoregular"
-                                android:padding="5dp"
-                                android:text="Art Mesurements"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/textViewArtWeight"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:fontFamily="@font/robotoregular"
-                                android:padding="5dp"
-                                android:text="Art Weight"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="14sp" />
-
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/textViewSpecification"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginLeft="3dp"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/robotomedium"
                                 android:padding="5dp"
                                 android:text="Specification"
@@ -239,175 +250,176 @@
                                 android:text="Art Specs Desc"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="14sp" />
-
-
                         </LinearLayout>
 
-                    </android.support.v7.widget.CardView>
+                    </LinearLayout>
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/ViewArtUserDetailsCardview"
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ViewArtUserDetailsCardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    app:cardCornerRadius="2dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
-                        android:elevation="4dp"
-                        android:padding="20dp"
-                        app:cardCornerRadius="2dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp">
 
-                        <LinearLayout
+
+                        <TextView
+                            android:id="@+id/textViewArtSoldBy"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:fontFamily="@font/robotomedium"
+                            android:padding="5dp"
+                            android:text="Offered By"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="5dp"
+                            android:background="#c1c1c1" />
 
-                            <TextView
-                                android:id="@+id/textViewArtSoldBy"
-                                android:layout_width="match_parent"
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:id="@+id/imageViewArtUserProfile"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.53"
+                                app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+                            <LinearLayout
+                                android:id="@+id/linearLayout2"
+                                android:layout_width="295dp"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:fontFamily="@font/robotomedium"
-                                android:padding="5dp"
-                                android:text="Sold By"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="16sp" />
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginEnd="88dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="88dp"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.074"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewArtUserProfile"
+                                app:layout_constraintTop_toTopOf="parent">
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_margin="5dp"
-                                android:background="#c1c1c1" />
+                                <TextView
+                                    android:id="@+id/textViewArtUserName"
+                                    android:layout_width="159dp"
+                                    android:layout_height="match_parent"
 
-                            <android.support.constraint.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="10dp">
+                                    android:fontFamily="@font/robotomedium"
+                                    android:paddingBottom="2dp"
+                                    android:text="Username"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="16sp"
+                                    tools:layout_editor_absoluteX="98dp" />
 
-                                <ImageView
-                                    android:id="@+id/imageViewArtUserProfile"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_marginBottom="8dp"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginStart="8dp"
-                                    android:layout_marginTop="8dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.53"
-                                    app:srcCompat="@drawable/ic_account_circle_black_24dp" />
-
-                                <LinearLayout
-                                    android:id="@+id/linearLayout2"
-                                    android:layout_width="295dp"
+                                <TextView
+                                    android:id="@+id/textViewArtUserEmail"
+                                    android:layout_width="193dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="8dp"
-                                    android:layout_marginEnd="88dp"
-                                    android:layout_marginLeft="24dp"
-                                    android:layout_marginRight="88dp"
-                                    android:layout_marginStart="24dp"
-                                    android:layout_marginTop="8dp"
-                                    android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.074"
-                                    app:layout_constraintStart_toEndOf="@+id/imageViewArtUserProfile"
-                                    app:layout_constraintTop_toTopOf="parent">
 
-                                    <TextView
-                                        android:id="@+id/textViewArtUserName"
-                                        android:layout_width="159dp"
-                                        android:layout_height="match_parent"
+                                    android:fontFamily="@font/robotoregular"
 
-                                        android:fontFamily="@font/robotomedium"
-                                        android:paddingBottom="2dp"
-                                        android:text="Username"
-                                        android:textColor="@color/colorPrimaryDark"
-                                        android:textSize="16sp"
-                                        tools:layout_editor_absoluteX="98dp" />
-
-                                    <TextView
-                                        android:id="@+id/textViewArtUserEmail"
-                                        android:layout_width="193dp"
-                                        android:layout_height="wrap_content"
-
-                                        android:fontFamily="@font/robotoregular"
-
-                                        android:text="Email"
-                                        android:textColor="@color/colorPrimaryDark"
-                                        tools:layout_editor_absoluteX="98dp" />
+                                    android:text="Email"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    tools:layout_editor_absoluteX="98dp" />
 
 
-                                </LinearLayout>
+                            </LinearLayout>
 
 
-                            </android.support.constraint.ConstraintLayout>
+                        </android.support.constraint.ConstraintLayout>
 
-                        </LinearLayout>
+                    </LinearLayout>
 
-                    </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </ScrollView>
+        </ScrollView>
 
 
-        </LinearLayout>
 
-        <android.support.constraint.ConstraintLayout
+    </LinearLayout>
 
-            android:id="@+id/constraintLayout3"
-            android:layout_width="match_parent"
+    <android.support.constraint.ConstraintLayout
 
-            android:elevation="4dp"
-            android:layout_height="wrap_content"
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <Button
+            android:id="@+id/buttonAddtoCart"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+
+            android:layout_gravity="start"
+            android:background="@drawable/button_border"
+            android:elevation="40dp"
+            android:fontFamily="@font/robotomedium"
+            android:text="Add to Cart"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonWishlist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/buttonWishlist"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+
+            android:background="@drawable/button_border"
+            android:elevation="2dp"
+            android:fontFamily="@font/robotomedium"
+            android:text="Wishlist"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-
-            <Button
-                android:id="@+id/buttonAddtoCart"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-
-                android:layout_gravity="start"
-                android:background="@drawable/button_border"
-                android:elevation="2dp"
-                android:fontFamily="@font/robotoregular"
-                android:text="Add to Cart"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonWishlist"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <Button
-                android:id="@+id/buttonWishlist"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
-
-                android:background="@drawable/button_border"
-                android:elevation="2dp"
-                android:fontFamily="@font/robotoregular"
-                android:text="Wishlist"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/buttonAddtoCart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </android.support.constraint.ConstraintLayout>
+            app:layout_constraintStart_toEndOf="@+id/buttonAddtoCart"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -22,6 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <include
+            layout="@layout/conn_error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
@@ -45,12 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_activity"
-            android:textSize="24sp" />
     </LinearLayout>
 
 
