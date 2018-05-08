@@ -95,12 +95,21 @@ public class Signup extends AppCompatActivity {
         progressDialog.setMessage("Registering......");
         progressDialog.show();
 
-        StringRequest signUpRequest= new StringRequest(Request.Method.POST,
+        StringRequest signUpRequest= new StringRequest(
+                Request.Method.POST,
                 Constants.URL_REGISTER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
+
+                        //error here=====
+
+
+
+                        //=================
+
+
                         Toast.makeText(Signup.this,response,Toast.LENGTH_SHORT).show();
 
 
@@ -138,7 +147,11 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        //Toast.makeText(Signup.this,"Please Enter Valid Credentials !",Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(Signup.this,error.toString(),Toast.LENGTH_SHORT).show();
+
+
+
                         //Toast.makeText(Signup.this,error.toString(),Toast.LENGTH_SHORT).show();
                         if (error instanceof NetworkError) {
                             Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
