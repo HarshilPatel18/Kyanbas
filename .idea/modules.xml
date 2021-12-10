@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Kyanbas.iml" filepath="$PROJECT_DIR$/Kyanbas.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/kyanbasmaster.iml" filepath="$PROJECT_DIR$/.idea/kyanbasmaster.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/kyanbasmaster.iml" filepath="$PROJECT_DIR$/.idea/kyanbasmaster.iml" />
       <module fileurl="file://$PROJECT_DIR$/kyanbasmaster.iml" filepath="$PROJECT_DIR$/kyanbasmaster.iml" />
     </modules>

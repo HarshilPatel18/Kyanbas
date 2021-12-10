@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -23,8 +24,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.anomaly.android.kyanbas.Adapter.RecyclerviewBaseAdapter;
 import com.anomaly.android.kyanbas.Adapter.ViewPagerAdapter;
+import com.anomaly.android.kyanbas.Modal.Art;
 import com.anomaly.android.kyanbas.Modal.Category;
+import com.anomaly.android.kyanbas.Modal.User;
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.Internet.ConnectivityReceiver;
 import com.anomaly.android.kyanbas.Network.Internet.MyApplication;
@@ -34,12 +38,16 @@ import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.Authentication.Login;
 import com.anomaly.android.kyanbas.View.ImageViews.PicassoCircleTransformation;
+import com.anomaly.android.kyanbas.View.Profile.CartActivity;
 import com.anomaly.android.kyanbas.View.Profile.Profile;
+import com.anomaly.android.kyanbas.View.Profile.WishlistActivity;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.squareup.picasso.Picasso;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import android.view.View;
@@ -65,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private ViewPager viewPager;
     private View headerView;
     private View connErrorview;
-    TextView navHeaderUsername;
+    TextView navHeaderUsername,cartItemCount;
     ImageView navHeaderUserProfilePic;
 
 
@@ -92,11 +100,19 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         mToolbar=findViewById(R.id.nav_actionbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         ImageView toolbarCart=findViewById(R.id.imagviewCartToolbar);
         toolbarCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StyleableToast.makeText(getApplicationContext(),"Clicked on Cart",R.style.Success).show();
+                if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn())
+                {
+                    startActivity(new Intent(getApplicationContext(), CartActivity.class));
+                }
+                else {
+                    SharedPrefManager.getInstance(getApplicationContext()).logout();
+                    startActivity(new Intent(getApplicationContext(), Login.class));
+                }
             }
         });
 
@@ -112,8 +128,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         navHeaderUsername=(TextView)headerView.findViewById(R.id.textviewUsernameNavDrawer);
         navHeaderUserProfilePic = headerView.findViewById(R.id.imageviewProfileNavDrawer);
 
-
-
+        cartItemCount=findViewById(R.id.textViewCartItemCount);
 
     }
 
@@ -166,23 +181,12 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-
-
-        if(id==R.id.nav_logout)
-        {
-
-            SharedPrefManager.getInstance(this).logout();
-
-            this.mDrawerLayout.closeDrawer(GravityCompat.START);
-
-            StyleableToast.makeText(this,"You Are Succesfully Logged Out",R.style.Error).show();
-            onStart();
+        if(id==R.id.nav_cart){
+            startActivity(new Intent(getApplicationContext(), CartActivity.class));
         }
-
-        else if(id==R.id.nav_cart){
-            this.mDrawerLayout.closeDrawer(GravityCompat.START);
-
-            //startActivity(new Intent(MainActivity.this, ViewArt.class));
+        else if(id==R.id.nav_wishlist)
+        {
+            startActivity(new Intent(getApplicationContext(), WishlistActivity.class));
         }
 
         return false;
@@ -213,49 +217,22 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
 
                     getUserInfo();
+                    setProfile();
+                    cartCount();
 
-                    navHeaderUsername.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                }
+                else{
 
-                            startActivity(new Intent(MainActivity.this, Profile.class));
-                        }
-                    });
-
-
-                    navHeaderUserProfilePic.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            startActivity(new Intent(MainActivity.this, Profile.class));
-                        }
-                    });
-
+                    setLogin();
                 }
 
             }
-            else{
-
-                navHeaderUsername.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        startActivity(new Intent(MainActivity.this, Login.class));
-                    }
-                });
-
-
-                navHeaderUserProfilePic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        startActivity(new Intent(MainActivity.this, Login.class));
-                    }
-                });
+            else {
+                setLogin();
             }
+
+
         }
-
-
 
     }
 
@@ -384,7 +361,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
                             if(!jsonObject.getBoolean("success"))
                             {
-                                Toast.makeText(MainActivity.this,jsonObject.getString("error"),Toast.LENGTH_LONG).show();
+                                StyleableToast.makeText(getApplicationContext(),"Session Time Out",R.style.Error).show();
+                                SharedPrefManager.getInstance(getApplicationContext()).logout();
                             }
                             else {
 
@@ -395,8 +373,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
 
                                 String name = dataJsonObject.get("first_name")+" "+dataJsonObject.get("last_name");
-
-
 
                                 navHeaderUsername.setText(name);
 
@@ -411,7 +387,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(MainActivity.this,"exception error",Toast.LENGTH_LONG).show();
+                            //SharedPrefManager.getInstance(getApplicationContext()).logout();
+                            //Toast.makeText(MainActivity.this,"exception error",Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -419,7 +396,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        //SharedPrefManager.getInstance(getApplicationContext()).logout();
+                        //Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                         error.printStackTrace();
 
                     }
@@ -435,19 +413,164 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             /** Passing some request headers* */
             @Override
             public Map<String,String> getHeaders() throws AuthFailureError {
-                String bearer = SharedPrefManager.getInstance(getApplicationContext()).getTokenType()+SharedPrefManager.getInstance(getApplicationContext()).getAccessToken().trim();
+
                 Map headers = new HashMap();
-                headers.put("Authorization",bearer);
+                if(SharedPrefManager.getInstance(getApplicationContext()).getAccessToken()!=null)
+                {
+                    String bearer = "bearer "+SharedPrefManager.getInstance(getApplicationContext()).getAccessToken();
+                    headers.put("Authorization",bearer);
+                    return headers;
+                }
+                else{
+                    String bearer = "bearer "+"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vc3RhZ2luZy5yZW50ZWRjYW52YXMuY29tL2FwaS9hdXRoL2xjU4OTY0OTUsIm5iZiI6MTUyNTg5Mjg5N";
+                    headers.put("Authorization",bearer);
+
+                }
                 return headers;
+
             }
 
         };
 
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy
+                        .DEFAULT_BACKOFF_MULT));
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
     }
 
 
+    //ChangeClicks on Profile
 
+    private void setLogin()
+    {
+        navHeaderUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(MainActivity.this, Login.class));
+            }
+        });
+
+
+        navHeaderUserProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(MainActivity.this, Login.class));
+            }
+        });
+    }
+
+    private void setProfile()
+    {
+
+        navHeaderUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(MainActivity.this, Profile.class));
+            }
+        });
+
+
+        navHeaderUserProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(MainActivity.this, Profile.class));
+            }
+        });
+    }
+
+    private void cartCount()
+    {
+        StringRequest cartRequest=new StringRequest(Request.Method.GET, Constants.URL_CART_LIST, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.has("success"))
+                    {
+                        if(!jsonObject.getBoolean("success"))
+                        {
+                            cartItemCount.setVisibility(View.GONE);
+                            Log.e("CART","Empty");
+                        }
+                    }
+                    else
+                    {
+
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        int count=0;
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+
+                            JSONObject artJson = jsonArray.getJSONObject(i);
+                            count++;
+                        }
+                        cartItemCount.setVisibility(View.VISIBLE);
+                        if(count>9)
+                        {
+                            cartItemCount.setText("9+");
+                        }
+                        else
+                        {
+                            cartItemCount.setText(String.valueOf(count));
+                        }
+
+
+                    }
+
+
+                } catch (JSONException e) {
+
+
+                    Log.e("CART",e.getLocalizedMessage());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("CART",error.getLocalizedMessage());
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String,String> getHeaders() throws AuthFailureError {
+                Map headers = new HashMap();
+                if(SharedPrefManager.getInstance(getApplicationContext()).getAccessToken()!=null)
+                {
+                    String bearer = "bearer "+SharedPrefManager.getInstance(getApplicationContext()).getAccessToken();
+                    headers.put("Authorization",bearer);
+                    return headers;
+                }
+                else{
+                    String bearer = "bearer "+"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vc3RhZ2luZy5yZW50ZWRjYW52YXMuY29tL2FwaS9hdXRoL2xjU4OTY0OTUsIm5iZiI6MTUyNTg5Mjg5N";
+                    headers.put("Authorization",bearer);
+
+                }
+                return headers;
+            }
+
+        };
+
+        cartRequest.setRetryPolicy(new DefaultRetryPolicy(1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy
+                        .DEFAULT_BACKOFF_MULT));
+        RequestHandler.getInstance(this).addToRequestQueue(cartRequest);
+    }
 
 }

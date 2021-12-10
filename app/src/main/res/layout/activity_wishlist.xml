@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundXD"
-    tools:context=".View.Profile.CartActivity">
+    tools:context=".View.Profile.WishlistActivity">
 
 
     <include
-        android:id="@+id/includeToolbarCart"
+        android:id="@+id/includeToolbarWishlist"
         layout="@layout/toolbar_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,11 +28,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewCartError"
+        android:id="@+id/textViewWishlistError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/hkgroteskregular"
-        android:text="Cart is Empty"
+        android:text="Wishlist is Empty"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         android:visibility="gone"
@@ -44,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerCart"
+        android:id="@+id/recyclerWishlist"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
@@ -58,7 +57,7 @@
     </android.support.v7.widget.RecyclerView>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutCartBottom"
+        android:id="@+id/constraintLayoutWishlistBottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_border"
@@ -67,39 +66,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/textViewCartTotalAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:fontFamily="@font/hkgroteskemibold"
-            android:text="Total Amount"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
 
         <TextView
-            android:id="@+id/textViewCartContinue"
+            android:id="@+id/textViewNewWishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginEnd="136dp"
+            android:layout_marginRight="136dp"
             android:layout_marginTop="16dp"
             android:background="@color/colorPrimary"
-            android:fontFamily="@font/hkgroteskbold"
-            android:text="Continue"
+            android:fontFamily="@font/hkgroteskemibold"
+            android:text="New Wishlist"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewNewWishlist"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.486"
+            app:srcCompat="@drawable/ic_add_plus" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

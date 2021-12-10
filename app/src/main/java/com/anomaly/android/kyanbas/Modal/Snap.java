@@ -23,7 +23,7 @@ public class Snap {
         return mGravity;
     }
 
-    public List<Art> getApps(){
+    public List<Art> getArts(){
         return mArtList;
     }
 

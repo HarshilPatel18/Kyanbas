@@ -28,6 +28,10 @@ import com.android.volley.toolbox.Volley;
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.R;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,42 +107,51 @@ public class Signup extends AppCompatActivity {
                     public void onResponse(String response) {
                         progressDialog.dismiss();
 
-                        //error here=====
 
+                        try {
 
+                            JSONObject jsonObject=new JSONObject(response);
 
-                        //=================
+                            if(!jsonObject.getBoolean("success"))
+                            {
+                                String  result = jsonObject.getString("error");
+                                if(result.contains("The email has already been taken"))
+                                {
+                                    result="The email has already been taken";
+                                }
+                                StyleableToast.makeText(getApplicationContext(),jsonObject.getString("error"),R.style.Error).show();
+                            }
+                            else{
 
+                                AlertDialog.Builder signupAlertBuilder = new AlertDialog.Builder(Signup.this)
+                                        .setMessage("Thanks for signing up! \nPlease check your email to complete your registration.\nGoto?")
+                                        .setCancelable(false)
+                                        .setPositiveButton("Mail", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                        Toast.makeText(Signup.this,response,Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                                                startActivity(intent);
 
+                                            }
+                                        })
+                                        .setNegativeButton("Log In", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
 
-//================Alert here
+                                                startActivity(new Intent(Signup.this, Login.class));
 
-                        AlertDialog.Builder signupAlertBuilder = new AlertDialog.Builder(Signup.this)
-                                .setMessage("Thanks for signing up! \nPlease check your email to complete your registration.\nGoto?")
-                                .setCancelable(false)
-                                .setPositiveButton("Mail", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                            }
+                                        });
 
-                                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                                        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                                        startActivity(intent);
+                                AlertDialog SignupalertDialog = signupAlertBuilder.create();
+                                SignupalertDialog.show();
+                            }
 
-                                    }
-                                })
-                                .setNegativeButton("Log In", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                        startActivity(new Intent(Signup.this, Login.class));
-
-                                    }
-                                });
-
-                        AlertDialog SignupalertDialog = signupAlertBuilder.create();
-                        SignupalertDialog.show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
                     }
@@ -150,24 +163,6 @@ public class Signup extends AppCompatActivity {
 
                         Toast.makeText(Signup.this,error.toString(),Toast.LENGTH_SHORT).show();
 
-
-
-                        //Toast.makeText(Signup.this,error.toString(),Toast.LENGTH_SHORT).show();
-                        if (error instanceof NetworkError) {
-                            Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
-                        } else if (error instanceof ServerError) {
-
-                            Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_SHORT).show();
-                        } else if (error instanceof AuthFailureError) {
-                            Toast.makeText(getApplicationContext(), "AuthFailure Error", Toast.LENGTH_SHORT).show();
-                        } else if (error instanceof ParseError) {
-                            Toast.makeText(getApplicationContext(), "Parse Error", Toast.LENGTH_SHORT).show();
-                        } else if (error instanceof NoConnectionError) {
-                            Toast.makeText(getApplicationContext(), "NoConnection Error", Toast.LENGTH_SHORT).show();
-                        } else if (error instanceof TimeoutError) {
-                            Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_SHORT).show();
-
-                        }
                     }
                 }){
             @Override

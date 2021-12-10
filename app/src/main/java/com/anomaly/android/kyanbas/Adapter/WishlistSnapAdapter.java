@@ -15,14 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.Modal.Snap;
+import com.anomaly.android.kyanbas.R;
 import com.github.rubensousa.gravitysnaphelper.GravityPagerSnapHelper;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.util.ArrayList;
 
-public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder> implements GravitySnapHelper.SnapListener {
+public class WishlistSnapAdapter extends RecyclerView.Adapter<WishlistSnapAdapter.ViewHolder> implements GravitySnapHelper.SnapListener {
 
 
 
@@ -38,7 +38,7 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder> im
         }
     };
 
-    public SnapAdapter() {
+    public WishlistSnapAdapter() {
         mSnaps = new ArrayList<>();
     }
 
@@ -87,7 +87,7 @@ public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder> im
         }
 
 
-        holder.recyclerView.setAdapter(new SnapCardAdapter(snap.getArts(),mContext));
+        holder.recyclerView.setAdapter(new WishListSnapCardAdapter(snap.getArts(),mContext));
     }
 
     @Override

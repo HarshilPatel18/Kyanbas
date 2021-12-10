@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5px"
-                android:fontFamily="@font/robotomedium"
+                android:fontFamily="@font/hkgroteskemibold"
                 android:padding="5px"
                 android:text="Art Name"
                 android:textColor="@color/colorPrimaryDark"
@@ -51,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5px"
+                android:fontFamily="@font/hkgroteskregular"
                 android:padding="5px"
                 android:text="By Artist" />
 
@@ -59,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5px"
-                android:fontFamily="@font/robotomedium"
+                android:fontFamily="@font/hkgroteskemibold"
                 android:padding="5px"
                 android:text="Price"
                 android:textColor="@color/colorPrimaryDark"

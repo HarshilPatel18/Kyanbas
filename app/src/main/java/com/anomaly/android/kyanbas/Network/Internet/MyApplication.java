@@ -2,10 +2,7 @@ package com.anomaly.android.kyanbas.Network.Internet;
 
 import android.app.Application;
 
-/**
- * Created by Ravi Tamada on 15/06/16.
- * www.androidhive.info
- */
+
 public class MyApplication extends Application {
 
     private static MyApplication mInstance;

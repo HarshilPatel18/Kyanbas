@@ -40,11 +40,17 @@ public class Constants {
     public static final String URL_LOGIN= API_ROOT_URL+"auth/login";
     public static final String URL_LOGIN_social= API_ROOT_URL+"auth/social";
     public static final String URL_REGISTER=API_ROOT_URL+"auth/register";
-    public static final String URL_TEST_TOKEN=API_ROOT_URL+"auth/refresh";
+    public static final String URL_TEST_TOKEN=API_ROOT_URL+"test";
 
 
     //user
     public static final String URL_USER_INFO=API_ROOT_URL+"users/me";
+    public static final String URL_CART_LIST=API_ROOT_URL+"cart/list";
+    public static final String URL_CART_ADD=API_ROOT_URL+"cart/add/";
+    public static final String URL_CART_REMOVE=API_ROOT_URL+"cart/remove/";
+    public static final String URL_WISHLIST_LIST=API_ROOT_URL+"wishlist/list/";
+    public static final String URL_WISHLIST_ITEMS=API_ROOT_URL+"wishlist/items/";
+
 
 
     //art
@@ -92,14 +98,14 @@ public class Constants {
                             else {
                                 JSONObject dataJsonObject=jsonObject.getJSONObject("data");
                                 SharedPrefManager.getInstance(mContext).userLogin(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN));
-                                SharedPrefManager.getInstance(mContext).tokenType(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN_TYPE));
-                                StyleableToast.makeText(mContext,"Authorized Token",R.style.Success).show();
+                                //StyleableToast.makeText(mContext,"Authorized Token",R.style.Success).show();
 
                             }
 
 
 
                         } catch (JSONException e) {
+                            //SharedPrefManager.getInstance(mContext).logout();
                             e.printStackTrace();
                         }
 
@@ -110,7 +116,8 @@ public class Constants {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(mContext,"Error : "+error.getMessage(),Toast.LENGTH_LONG).show();
+                        //SharedPrefManager.getInstance(mContext).logout();
+                        //Toast.makeText(mContext,"Error : "+error.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 }
         ){
@@ -122,7 +129,7 @@ public class Constants {
 
             @Override
             public Map<String,String> getHeaders() throws AuthFailureError {
-                String bearer = SharedPrefManager.getInstance(mContext).getTokenType()+SharedPrefManager.getInstance(mContext).getAccessToken().trim();
+                String bearer = "bearer "+SharedPrefManager.getInstance(mContext).getAccessToken();
                 Map headers = new HashMap();
                 headers.put("Authorization",bearer);
                 return headers;

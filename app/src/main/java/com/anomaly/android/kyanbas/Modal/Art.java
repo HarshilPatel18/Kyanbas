@@ -43,6 +43,8 @@ public class Art {
         this.id = id;
         this.name = name;
         this.thumbnailPicture = thumbnailPicture;
+        String image_url=thumbnailPicture.replace("thumbnail","original");
+
         this.price = price;
         this.user=user;
         this.nicename=nicename;

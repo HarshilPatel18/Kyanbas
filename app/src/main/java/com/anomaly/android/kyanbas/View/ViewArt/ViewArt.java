@@ -1,5 +1,6 @@
 package com.anomaly.android.kyanbas.View.ViewArt;
-import android.graphics.drawable.Drawable;
+
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,9 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -20,14 +25,18 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
+import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
 import com.anomaly.android.kyanbas.View.ImageViews.PicassoCircleTransformation;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewArt extends AppCompatActivity {
 
@@ -36,29 +45,35 @@ public class ViewArt extends AppCompatActivity {
             toolbarText, artMesurements,artWeight,artSpecs,
             artSpecDesc,artAvailable,artDeliveryType;
     private ImageView artImage,userProfileImage;
-    private LinearLayout linearLayout,viewArtSpecs;
+    private LinearLayout linearLayoutViewArt,viewArtSpecs;
+    private ConstraintLayout constraintBottom;
     private android.support.v7.widget.Toolbar toolbar;
     private Button addToCart,addToWishlist;
+    private ProgressBar progressBar;
+    private String nicename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_art);
 
-        toolbar= findViewById(R.id.activityToolbar);
+        toolbar= findViewById(R.id.includeToolbarViewArt);
         toolbarText=findViewById(R.id.textViewToolbar);
+        toolbarText.setText("");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
 
 
         //BindView
-        linearLayout = findViewById(R.id.linearLayoutViewArt);
+        linearLayoutViewArt = findViewById(R.id.linearLayoutViewArt);
+        constraintBottom=findViewById(R.id.constraintLayoutBottom);
+        progressBar=findViewById(R.id.progressBar);
         viewArtSpecs=findViewById(R.id.linearLayoutViewArtSpecs);
-        emptyview = findViewById(R.id.emptyViewLayout);
+        emptyview = findViewById(R.id.includeEmpty);
         artName = findViewById(R.id.textViewArtName);
         artPrice = findViewById(R.id.textViewArtPrice);
         artDesc = findViewById(R.id.textViewArtDesc);
@@ -76,17 +91,25 @@ public class ViewArt extends AppCompatActivity {
         addToWishlist=findViewById(R.id.buttonWishlist);
 
 
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToCart();
+            }
+        });
+
+
         Bundle bundle=getIntent().getExtras();
         if(bundle.getString("nicename")!=null)
         {
-
+            nicename=bundle.getString("nicename");
             loadArtDetails(bundle.getString("nicename"));
 
         }
         else
         {
-            /*emptyview.setVisibility(View.VISIBLE);
-            linearLayout.setVisibility(View.GONE);*/
+            emptyview.setVisibility(View.VISIBLE);
+            linearLayoutViewArt.setVisibility(View.GONE);
         }
     }
 
@@ -99,17 +122,19 @@ public class ViewArt extends AppCompatActivity {
 
     public void loadArtDetails(String nicename)
     {
+        progressBar.setVisibility(View.VISIBLE);
         StringRequest stringRequest= new StringRequest(Request.Method.GET, Constants.URL_VIEW_ART+nicename, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
 
-
-               /* emptyview.setVisibility(View.GONE);
-                linearLayout.setVisibility(View.VISIBLE);*/
-
                 try {
 
+
+                    emptyview.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    linearLayoutViewArt.setVisibility(View.VISIBLE);
+                    constraintBottom.setVisibility(View.VISIBLE);
 
                     JSONObject jsonData = new JSONObject(response).getJSONObject("data");
                     JSONObject productJson=jsonData.getJSONObject("product");
@@ -188,16 +213,20 @@ public class ViewArt extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Response Error : "+e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-                    /*emptyview.setVisibility(View.VISIBLE);
-                    linearLayout.setVisibility(View.GONE);*/
+                    emptyview.setVisibility(View.VISIBLE);
+                    linearLayoutViewArt.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    constraintBottom.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(),"Network issue",Toast.LENGTH_SHORT).show();
-                /*emptyview.setVisibility(View.VISIBLE);
-                linearLayout.setVisibility(View.GONE);*/
+                emptyview.setVisibility(View.VISIBLE);
+                linearLayoutViewArt.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+                constraintBottom.setVisibility(View.GONE);
             }
         }){
             @Override
@@ -265,4 +294,84 @@ public class ViewArt extends AppCompatActivity {
         RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
+
+
+    public void addToCart()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        StringRequest addtoCartRequest=new StringRequest(Request.Method.GET,
+                Constants.URL_CART_ADD+nicename.trim(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+
+
+                            progressBar.setVisibility(View.GONE);
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.getBoolean("success"))
+                            {
+
+                                StyleableToast.makeText(getApplicationContext(),jsonObject.getString("message"),R.style.Success).show();
+
+
+                            }
+                            else
+                            {
+                                StyleableToast.makeText(getApplicationContext(),jsonObject.getString("error"),R.style.Error).show();
+                            }
+
+
+
+                        } catch (JSONException e) {
+
+                            progressBar.setVisibility(View.GONE);
+                            e.printStackTrace();
+                            StyleableToast.makeText(getApplicationContext(),"Response Error : "+e.getLocalizedMessage(),R.style.Error).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressBar.setVisibility(View.GONE);
+                StyleableToast.makeText(getApplicationContext(),"Error : "+error.getLocalizedMessage(),R.style.Error).show();
+
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String,String> getHeaders() throws AuthFailureError {
+                Map headers = new HashMap();
+                if(SharedPrefManager.getInstance(getApplicationContext()).getAccessToken()!=null)
+                {
+                    String bearer = "bearer "+SharedPrefManager.getInstance(getApplicationContext()).getAccessToken();
+                    headers.put("Authorization",bearer);
+                    return headers;
+                }
+                else{
+                    String bearer = "bearer "+"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vc3RhZ2luZy5yZW50ZWRjYW52YXMuY29tL2FwaS9hdXRoL2xjU4OTY0OTUsIm5iZiI6MTUyNTg5Mjg5N";
+                    headers.put("Authorization",bearer);
+
+                }
+                return headers;
+            }
+
+        };
+
+        addtoCartRequest.setRetryPolicy(new DefaultRetryPolicy(1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy
+                        .DEFAULT_BACKOFF_MULT));
+        RequestHandler.getInstance(this).addToRequestQueue(addtoCartRequest);
+    }
+
 }

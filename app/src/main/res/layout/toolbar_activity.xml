@@ -5,7 +5,7 @@
     android:id="@+id/activityToolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="4dp"
+    android:elevation="8dp"
     android:theme="@style/AppTheme"
     android:background="@color/colorPrimary"
     app:subtitleTextColor="@color/colorPrimaryDark"
@@ -45,12 +45,12 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/relativeLayout3"
+            app:layout_constraintEnd_toStartOf="@+id/relativeLayoutGenericCart"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_search_black_24dp" />
 
         <RelativeLayout
-            android:id="@+id/relativeLayout3"
+            android:id="@+id/relativeLayoutGenericCart"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

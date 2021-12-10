@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_search_black_24dp" />
-                            <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Harshil\Downloads\Android\Kyanbas Resources\discount-voucher.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="autoMirrored" value="true" />
+                            <entry key="outputName" value="ic_add_plus" />
+                            <entry key="sourceFile" value="C:\Users\Harshil\Downloads\Android\Kyanbas Resources\plus.svg" />
                           </map>
                         </option>
                       </PersistentState>

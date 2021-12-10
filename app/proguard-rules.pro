@@ -19,6 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Hide warnings about references to newer platforms in the library
+-dontwarn android.support.v7.**
+# don't process support library
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
 
 ### PICASSO
 

@@ -27,6 +27,7 @@ import com.anomaly.android.kyanbas.Network.Constants;
 import com.anomaly.android.kyanbas.Network.RequestHandler;
 import com.anomaly.android.kyanbas.Network.SharedPrefManager;
 import com.anomaly.android.kyanbas.R;
+import com.anomaly.android.kyanbas.View.Main.MainActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -228,7 +229,7 @@ public class Login extends AppCompatActivity {
         final String email=editText_email.getText().toString().trim();
         final String password =editText_password.getText().toString().trim();
 
-        progressDialog.setMessage("Logging in......");
+        progressDialog.setMessage("Authenticating......");
         progressDialog.show();
 
         StringRequest loginRequest=new StringRequest(
@@ -251,7 +252,6 @@ public class Login extends AppCompatActivity {
                                 else {
                                     JSONObject dataJsonObject=jsonObject.getJSONObject("data");
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN));
-                                    SharedPrefManager.getInstance(getApplicationContext()).tokenType(dataJsonObject.getString(SharedPrefManager.KEY_ACCESS_TOKEN_TYPE));
 
                                     StyleableToast.makeText(getApplicationContext(),"Login Successful !", R.style.Success).show();
                                     finish();
@@ -410,14 +410,11 @@ public class Login extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        SharedPrefManager sharedPrefManager = new SharedPrefManager(getApplication());
-        if(sharedPrefManager.isLoggedIn()) {
 
-            Toast.makeText(Login.this, "Already Logged In !", Toast.LENGTH_LONG).show();
+        if(SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
 
-        }
-        else{
-            Toast.makeText(Login.this, "Not Logged In !", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
         }
 
     }
